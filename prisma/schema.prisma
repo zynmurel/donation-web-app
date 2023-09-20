@@ -68,11 +68,13 @@ model Course {
 
 model Item {
     id          String   @id @default(cuid())
-    item        String
     description String?
+    item        String?
     type        String
+    status      String
+    imageUrl    String
     student     Student? @relation(fields: [studentId], references: [id])
-    studentId   String
+    studentId   String?
     donor       Donor?   @relation(fields: [donorId], references: [id])
     donorId     String
     createdAt   DateTime @default(now())

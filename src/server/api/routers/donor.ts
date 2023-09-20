@@ -2,6 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { api } from "~/utils/api";
 
 export const donorRouter = createTRPCRouter({
   getDonorLogin: publicProcedure
@@ -71,5 +72,70 @@ export const donorRouter = createTRPCRouter({
           },
         });
       }
+    }),
+  findDonor: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .query(({ ctx, input }) => {
+      const donor = ctx.prisma.donor.findUnique({
+        where: {
+          id: input.id,
+        },
+      });
+      return donor;
+    }),
+  editDonor: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        username: z.string(),
+        firstName: z.string(),
+        lastName: z.string(),
+        alumni: z.boolean(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const hasDonor = await ctx.prisma.donor.findFirst({
+        where: {
+          username: input.username,
+        },
+      });
+      if (hasDonor && hasDonor.id !== input.id) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message:
+            "This username is already used! Please use another username.",
+          // optional: pass the original error to retain stack trace
+        });
+      } else {
+        return ctx.prisma.donor.update({
+          where: {
+            id: input.id,
+          },
+          data: {
+            ...input,
+          },
+        });
+      }
+    }),
+  donorChangePass: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        password: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return ctx.prisma.donor.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          ...input,
+        },
+      });
     }),
 });

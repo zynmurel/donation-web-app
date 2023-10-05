@@ -5,7 +5,8 @@ import { Avatar, Image, List, Space, Table, Tag } from "antd";
 import { ItemData } from "..";
 import { ColumnsType } from "antd/es/table";
 import { api } from "~/utils/api";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
+import { NotificationContext } from "~/pages/context/contextproviders";
 
 const DonationLists = ({
   data,
@@ -18,17 +19,21 @@ const DonationLists = ({
   setTabActive: any;
   setData: Dispatch<SetStateAction<ItemData[]>>;
 }) => {
+  const { openNotificationWithIcon } = useContext(NotificationContext);
   const { mutate, isLoading } = api.item.setItemsStatus.useMutation({
     onSuccess: (data) => {
       if (data.status === "cancelled") {
+        openNotificationWithIcon("info", "Item moved to cancelled items");
         setTabActive("cancelled");
       } else if (data.status === "pending") {
+        openNotificationWithIcon("success", "Item reprocessed");
         setTabActive("pending");
       }
     },
   });
   const { mutate: deleteItem } = api.item.deleteItem.useMutation({
     onSuccess: (data) => {
+      openNotificationWithIcon("info", "Item Deleted");
       setData(data);
     },
   });
@@ -107,13 +112,13 @@ const DonationLists = ({
           <div className=" flex flex-row items-center justify-center gap-2">
             <button
               onClick={() => mutate({ id: data.id, status: "pending" })}
-              className=" rounded bg-[#5073c3] p-2 text-white hover:brightness-105"
+              className=" rounded border-none bg-[#5073c3] p-2 text-white hover:brightness-105"
             >
               Reprocess Item
             </button>
             <button
               onClick={() => deleteItem({ id: data.id, donorId: data.donorId })}
-              className=" rounded bg-[#ff1414] p-2 text-white hover:brightness-105"
+              className=" rounded border-none bg-[#ff1414] p-2 text-white hover:brightness-105"
             >
               Delete Item
             </button>
@@ -132,7 +137,7 @@ const DonationLists = ({
         return (
           <button
             onClick={() => mutate({ id: data.id, status: "cancelled" })}
-            className=" rounded bg-[#ea6b6b] p-2 text-white hover:brightness-105"
+            className=" rounded border-none bg-[#ea6b6b] p-2 text-white hover:brightness-105"
           >
             Cancel Item
           </button>

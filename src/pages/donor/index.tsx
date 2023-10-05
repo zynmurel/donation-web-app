@@ -24,8 +24,8 @@ const DonorPage = () => {
     {
       key: "1",
       label: (
-        <button
-          className=" flex w-full items-center justify-center gap-2 rounded-md bg-red-100 p-2 py-1 text-lg hover:brightness-95"
+        <div
+          className=" flex w-full items-center justify-center gap-2 rounded-md bg-red-300 p-2 py-1 text-lg hover:brightness-95"
           onClick={() => {
             localStorage.clear();
             router.push("/donorLogin");
@@ -33,7 +33,7 @@ const DonorPage = () => {
         >
           <AiOutlinePoweroff />
           Logout
-        </button>
+        </div>
       ),
     },
   ];
@@ -56,6 +56,13 @@ const DonorPage = () => {
               <FaUserCircle size={45} />
             </div>
           </Dropdown>
+        </div>
+        <div className="mx-5 mt-2 rounded-md bg-[#d5edef] p-2 px-5 text-lg text-[#205b5d]">
+          Welcome, valued donor! Your generosity through the NWSSU Donation App
+          directly impacts the students of our institution. Every donation you
+          make contributes to their educational journey, empowering them for a
+          brighter future. Thank you for being a part of our community and for
+          supporting the growth and development of our students.
         </div>
         <DonationLists />
       </div>

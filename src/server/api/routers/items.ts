@@ -25,13 +25,29 @@ export const itemsRouter = createTRPCRouter({
       return createItem;
     }),
   getItemsByStatus: publicProcedure
-    .input(z.object({ status: z.string(), donorId: z.string() }))
-    .mutation(({ ctx, input }) => {
-      return ctx.prisma.item.findMany({
+    .input(
+      z.object({
+        status: z.string(),
+        donorId: z.string(),
+        alsoDonated: z.nullable(z.boolean()),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const donated = await ctx.prisma.item.findMany({
+        where: {
+          AND: [{ status: "donated" }, { donorId: input.donorId }],
+        },
+      });
+      const item = await ctx.prisma.item.findMany({
         where: {
           AND: [{ status: input.status }, { donorId: input.donorId }],
         },
       });
+      const some = [...item];
+      if (input.alsoDonated) {
+        some.push(...donated);
+      }
+      return some;
     }),
 
   setItemsStatus: publicProcedure
@@ -59,5 +75,32 @@ export const itemsRouter = createTRPCRouter({
           AND: [{ status: "cancelled" }, { donorId: input.donorId }],
         },
       });
+    }),
+  getAllItems: publicProcedure
+    .input(z.object({ donorId: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.prisma.item.findMany({
+        where: {
+          donorId: input.donorId,
+        },
+      });
+    }),
+  getItemsByStatusQuery: publicProcedure
+    .input(
+      z.object({
+        status: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const students = ctx.prisma.item.findMany({
+        where: {
+          status: input.status,
+        },
+        include: {
+          donor: true,
+          student: true,
+        },
+      });
+      return students;
     }),
 });

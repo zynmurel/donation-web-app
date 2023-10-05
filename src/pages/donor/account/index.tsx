@@ -26,8 +26,8 @@ const DonorPage = () => {
     {
       key: "1",
       label: (
-        <button
-          className=" flex w-full items-center justify-center gap-2 rounded-md bg-red-100 p-2 py-1 text-lg hover:brightness-95"
+        <div
+          className=" flex w-full items-center justify-center gap-2 rounded-md bg-red-300 p-2 py-1 text-lg hover:brightness-95"
           onClick={() => {
             localStorage.clear();
             router.push("/donorLogin");
@@ -35,7 +35,7 @@ const DonorPage = () => {
         >
           <AiOutlinePoweroff />
           Logout
-        </button>
+        </div>
       ),
     },
   ];

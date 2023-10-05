@@ -46,7 +46,6 @@ export const studentRouter = createTRPCRouter({
           code: "INTERNAL_SERVER_ERROR",
           message:
             "This student identification has already been used! Please contact the administrator if you believe there is an error.",
-          // optional: pass the original error to retain stack trace
         });
       } else {
         return ctx.prisma.student.create({
@@ -57,5 +56,55 @@ export const studentRouter = createTRPCRouter({
           },
         });
       }
+    }),
+  getStudentByStatus: publicProcedure
+    .input(
+      z.object({
+        status: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const students = ctx.prisma.student.findMany({
+        where: {
+          status: input.status,
+        },
+        include: {
+          course: true,
+          department: true,
+        },
+      });
+      return students;
+    }),
+  changeStudentStatus: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        status: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const students = ctx.prisma.student.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          status: input.status,
+        },
+      });
+      return students;
+    }),
+  deleteStudent: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const students = ctx.prisma.student.delete({
+        where: {
+          id: input.id,
+        },
+      });
+      return students;
     }),
 });

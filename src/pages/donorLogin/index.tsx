@@ -19,7 +19,7 @@ export default function Home() {
   const { mutate, isLoading } = api.donor.getDonorLogin.useMutation({
     onSuccess: (data) => {
       if (data.hasEmail && data.login) {
-        toast.success("Login");
+        toast.success(`Login as ${data.type}`);
         form.resetFields();
         loginLocalStorage(data.type, data.login.id);
       } else if (!data.login && data.hasEmail) {
@@ -68,7 +68,7 @@ export default function Home() {
             </div>
             <div className=" flex w-full flex-col items-center justify-center rounded-lg bg-white  p-10 text-2xl font-semibold text-slate-600 ">
               <span className=" text-2xl font-medium text-[#3ba9ac]">
-                Login as Donor
+                Login as Donor / Admin
               </span>
               <span className=" rounded bg-[#e4feff] p-2 text-center text-sm font-light text-[#3ba9ac]">
                 Your gently-used items can make a significant difference for

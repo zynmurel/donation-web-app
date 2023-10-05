@@ -17,25 +17,27 @@ model Donor {
     username  String   @unique
     password  String
     alumni    Boolean
+    contact   String?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
     Item      Item[]
 }
 
 model Student {
-    id           String      @id @default(cuid())
-    studentId    String      @unique
+    id           String       @id @default(cuid())
+    studentId    String       @unique
     firstName    String
     lastName     String
     status       String
     password     String
-    department   Department? @relation(fields: [departmentId], references: [id])
+    department   Department?  @relation(fields: [departmentId], references: [id])
     departmentId String
-    course       Course?     @relation(fields: [courseId], references: [id])
+    course       Course?      @relation(fields: [courseId], references: [id])
     courseId     String
-    createdAt    DateTime    @default(now())
-    updatedAt    DateTime    @updatedAt
+    createdAt    DateTime     @default(now())
+    updatedAt    DateTime     @updatedAt
     Item         Item[]
+    ItemToMine   ItemToMine[]
 }
 
 model Admin {
@@ -50,6 +52,7 @@ model Admin {
 model Department {
     id        String    @id @default(cuid())
     name      String    @unique
+    acronym   String    @unique
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt
     Course    Course[]
@@ -67,16 +70,27 @@ model Course {
 }
 
 model Item {
-    id          String   @id @default(cuid())
+    id          String       @id @default(cuid())
     description String?
     item        String?
     type        String
     status      String
     imageUrl    String
-    student     Student? @relation(fields: [studentId], references: [id])
+    student     Student?     @relation(fields: [studentId], references: [id])
     studentId   String?
-    donor       Donor?   @relation(fields: [donorId], references: [id])
+    donor       Donor?       @relation(fields: [donorId], references: [id])
     donorId     String
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
+    createdAt   DateTime     @default(now())
+    updatedAt   DateTime     @updatedAt
+    ItemToMine  ItemToMine[]
+}
+
+model ItemToMine {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    item      Item     @relation(fields: [itemID], references: [id])
+    itemID    String
+    student   Student  @relation(fields: [studentId], references: [id])
+    studentId String
+    updatedAt DateTime @updatedAt
 }

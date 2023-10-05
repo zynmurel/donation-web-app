@@ -25,6 +25,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
     <NotificationContext.Provider value={{ openNotificationWithIcon }}>
       <div className="min-h-screen  w-full bg-gradient-to-b   from-[#62d5b5] to-[#3ba9ac] font-body">
         {" "}
+        {contextHolder}
         <Toaster position="top-center" reverseOrder={false} />
         <Component {...pageProps} />
       </div>

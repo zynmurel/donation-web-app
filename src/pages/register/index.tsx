@@ -121,7 +121,7 @@ export default function Home() {
                       >
                         {data?.map((b) => (
                           <Select.Option key={b.id} value={b.id}>
-                            {b.name}
+                            {b.acronym}
                           </Select.Option>
                         ))}
                       </Select>

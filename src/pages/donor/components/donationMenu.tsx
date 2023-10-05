@@ -16,16 +16,6 @@ const DonationMenu = ({ tabActive, setTabActive }: any) => {
           To Donate{" "}
         </div>
         <div
-          onClick={() => setTabActive("approved")}
-          className={` cursor-pointer rounded-full p-2 px-5 text-lg transition-all ${
-            tabActive === "approved"
-              ? "bg-[#3ba9ac] text-white"
-              : " bg-slate-50 text-[#3ba9ac] hover:brightness-95"
-          }`}
-        >
-          Confirmed Donations{" "}
-        </div>
-        <div
           onClick={() => setTabActive("cancelled")}
           className={` cursor-pointer rounded-full p-2 px-5 text-lg transition-all ${
             tabActive === "cancelled"
@@ -34,6 +24,16 @@ const DonationMenu = ({ tabActive, setTabActive }: any) => {
           }`}
         >
           Cancelled Donations{" "}
+        </div>
+        <div
+          onClick={() => setTabActive("confirmed")}
+          className={` cursor-pointer rounded-full p-2 px-5 text-lg transition-all ${
+            tabActive === "confirmed"
+              ? "bg-[#3ba9ac] text-white"
+              : " bg-slate-50 text-[#3ba9ac] hover:brightness-95"
+          }`}
+        >
+          Confirmed Donations{" "}
         </div>
       </div>
       <button

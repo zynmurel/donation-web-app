@@ -100,6 +100,17 @@ export default function Home() {
                 <div className=" flex flex-row gap-1">
                   <div className=" flex flex-1 flex-col">
                     <span className=" pl-1 text-sm text-slate-600">
+                      Mobile Number
+                    </span>
+                    <Form.Item
+                      name="contact"
+                      rules={[{ required: true, message: "" }]}
+                    >
+                      <Input size="large" placeholder="09*********" />
+                    </Form.Item>
+                  </div>
+                  <div className=" flex flex-1 flex-col">
+                    <span className=" pl-1 text-sm text-slate-600">
                       Alumni of NWSSU ?
                     </span>
                     <Form.Item

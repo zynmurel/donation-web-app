@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import { BiSolidDonateHeart } from "react-icons/bi";
 import { FaUserCog } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
+import { AiOutlineUsergroupAdd } from "react-icons/ai";
+import { TbReportSearch } from "react-icons/tb";
 
 interface MenuItem {
   key: string;
@@ -15,24 +17,34 @@ interface MenuItem {
 }
 const { Text } = Typography;
 
-const SiderMenu: React.FC = () => {
+const AdminMenu: React.FC = () => {
   const router = useRouter();
   const path = router.pathname;
   const items: MenuItem[] = [
     {
-      key: "/donor",
+      key: "/admin",
       icon: <MdDashboard size={20} />,
       label: "Dashboard",
     },
     {
-      key: "/donor/donations",
+      key: "/admin/donations",
       icon: <BiSolidDonateHeart size={20} />,
-      label: "Your Donations",
+      label: "Donations",
     },
     {
-      key: "/donor/account",
+      key: "/admin/students",
+      icon: <AiOutlineUsergroupAdd size={20} />,
+      label: "Students",
+    },
+    {
+      key: "/admin/reports",
+      icon: <TbReportSearch size={20} />,
+      label: "Reports",
+    },
+    {
+      key: "/admin/settings",
       icon: <FaUserCog size={20} />,
-      label: "Account",
+      label: "Account & Settings",
     },
   ];
   const [current, setCurrent] = useState(path);
@@ -69,4 +81,4 @@ const SiderMenu: React.FC = () => {
   );
 };
 
-export default SiderMenu;
+export default AdminMenu;

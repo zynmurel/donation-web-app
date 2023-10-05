@@ -2,7 +2,6 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { api } from "~/utils/api";
 
 export const donorRouter = createTRPCRouter({
   getDonorLogin: publicProcedure
@@ -50,6 +49,7 @@ export const donorRouter = createTRPCRouter({
         lastName: z.string(),
         password: z.string(),
         alumni: z.boolean(),
+        contact: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {

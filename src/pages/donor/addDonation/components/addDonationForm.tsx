@@ -1,16 +1,19 @@
 import { Button, Form, Input, Select, Upload, UploadFile } from "antd";
 // import UploadButtonComponent from "./uploadImage";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ImageUpload from "./imageUpload";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
+import { NotificationContext } from "~/pages/context/contextproviders";
 
 const { TextArea } = Input;
 
 const AddDonationForm = () => {
+  const { openNotificationWithIcon } = useContext(NotificationContext);
   const router = useRouter();
   const { mutate, isLoading } = api.item.addItem.useMutation({
     onSuccess: () => {
+      openNotificationWithIcon("success", "Item to Donate Added");
       form.resetFields();
       router.push("/donor/donations");
     },

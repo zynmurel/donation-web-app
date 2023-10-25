@@ -10,7 +10,7 @@ const CardItemLists = () => {
   const tabList = [
     {
       key: "approved",
-      tab: "Approved Items",
+      tab: "Donate Approved Items",
     },
     {
       key: "pending",

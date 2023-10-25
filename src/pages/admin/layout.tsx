@@ -11,8 +11,8 @@ const AdminLayout = ({ children }: any) => {
     const user = localStorage.getItem("user");
     if (!user) {
       router.push("/login");
-    } else if (user !== "donor") {
-      if (!router.pathname.includes("admin")) {
+    } else if (user !== "admin") {
+      if (router.pathname.includes("admin")) {
         router.push(`/${user}`);
       }
     }

@@ -6,9 +6,10 @@ import { api } from "~/utils/api";
 
 const CancelledDonations = () => {
   const { openNotificationWithIcon } = useContext(NotificationContext);
-  const { data: donations, refetch } = api.item.getItemsByStatusQuery.useQuery({
-    status: "cancelled",
-  });
+  const { data: donations, refetch } =
+    api.item.getBulkDonationByStatus.useQuery({
+      status: "cancelled",
+    });
   const { mutate: changeStatus } = api.item.setItemsStatus.useMutation({
     onSuccess: () => {
       refetch();
@@ -22,11 +23,6 @@ const CancelledDonations = () => {
       key: "donor",
       width: 160,
       render: (donor: any) => <div>{donor.name}</div>,
-    },
-    {
-      title: "Type",
-      dataIndex: "type",
-      key: "type",
     },
     {
       title: "Contact",

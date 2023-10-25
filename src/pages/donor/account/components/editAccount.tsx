@@ -42,8 +42,7 @@ const EditAccount = () => {
   useEffect(() => {
     form.setFieldsValue({
       username: donor?.username,
-      firstName: donor?.firstName,
-      lastName: donor?.lastName,
+      name: donor?.name,
       alumni: donor?.alumni,
     });
     if (changePassword) {
@@ -59,10 +58,10 @@ const EditAccount = () => {
   return (
     <>
       <Form className=" mt-5 w-full" form={form} disabled={canEdit}>
-        <div className=" mx-auto mb-4 w-full p-3 text-center text-5xl font-extrabold text-[#205b5d]">
+        <div className=" mx-auto mb-4 w-full p-3 text-center text-2xl font-extrabold text-[#205b5d] sm:text-5xl">
           Account
         </div>
-        <div className=" mx-auto  flex  w-full justify-between text-xl font-extrabold text-[#205b5d]">
+        <div className=" mx-auto  flex  w-full justify-between text-base font-extrabold text-[#205b5d] sm:text-xl">
           <span>Donor Details</span>{" "}
           {canEdit && (
             <button
@@ -70,7 +69,7 @@ const EditAccount = () => {
                 setCanEdit(false);
                 setChangePassword(true);
               }}
-              className=" rounded bg-yellow-500 p-1 px-3 text-sm font-normal text-white hover:brightness-110"
+              className=" rounded border-none bg-yellow-500 p-1 px-3 text-sm font-normal text-white hover:brightness-110"
             >
               Edit Details
             </button>
@@ -82,21 +81,9 @@ const EditAccount = () => {
         </Form.Item>
         <div className=" flex flex-row gap-1">
           <div className=" flex flex-1 flex-col">
-            <span className=" pl-1 text-sm text-slate-600">First Name</span>
-            <Form.Item
-              name={"firstName"}
-              rules={[{ required: true, message: "" }]}
-            >
-              <Input size="large" placeholder="First name" />
-            </Form.Item>
-          </div>
-          <div className=" flex flex-1 flex-col">
-            <span className=" pl-1 text-sm text-slate-600">Last Name</span>
-            <Form.Item
-              name={"lastName"}
-              rules={[{ required: true, message: "" }]}
-            >
-              <Input size="large" placeholder="Last name" />
+            <span className=" pl-1 text-sm text-slate-600">Name</span>
+            <Form.Item name={"name"} rules={[{ required: true, message: "" }]}>
+              <Input size="large" placeholder="Donor Name" />
             </Form.Item>
           </div>
         </div>
@@ -125,25 +112,23 @@ const EditAccount = () => {
               onClick={() => {
                 setCanEdit(true);
               }}
-              className=" rounded border border-solid bg-[#ffff] p-1 px-5 text-base font-medium hover:brightness-95"
+              className=" rounded border border-solid bg-[#ffff] p-1 px-5 text-base font-medium text-black hover:brightness-95"
             >
               Cancel
             </button>
             <button
               onClick={() => {
-                const { firstName, lastName, alumni, username } =
-                  form.getFieldsValue();
+                const { name, alumni, username } = form.getFieldsValue();
                 if (donor) {
                   mutate({
                     id: donor.id,
-                    firstName: firstName,
-                    lastName: lastName,
+                    name: name,
                     alumni: alumni,
                     username: username,
                   });
                 }
               }}
-              className=" rounded bg-[#62d5b5] p-1 px-5 text-base font-semibold text-white hover:brightness-110"
+              className=" rounded border-none bg-[#62d5b5] p-1 px-5 text-base font-semibold text-white hover:brightness-110"
             >
               Save
             </button>
@@ -152,7 +137,7 @@ const EditAccount = () => {
       </Form>
 
       <Form className=" mt-5 w-full" form={form} disabled={changePassword}>
-        <div className=" mx-auto  flex  w-full justify-between text-xl font-extrabold text-[#205b5d]">
+        <div className=" mx-auto  flex  w-full justify-between text-base font-extrabold text-[#205b5d] sm:text-xl">
           <span>Account Password</span>{" "}
           {changePassword && (
             <button
@@ -160,7 +145,7 @@ const EditAccount = () => {
                 setChangePassword(false);
                 setCanEdit(true);
               }}
-              className=" rounded bg-green-500 p-1 px-3 text-sm font-normal text-white hover:brightness-110"
+              className=" rounded border-none bg-green-500 p-1 px-3 text-sm font-normal text-white hover:brightness-110"
             >
               Change password?
             </button>
@@ -209,7 +194,7 @@ const EditAccount = () => {
                 setCanEdit(true);
                 setChangePassword(true);
               }}
-              className=" rounded border border-solid bg-[#ffff] p-1 px-5 text-base font-medium hover:brightness-95"
+              className=" rounded border border-solid bg-[#ffff] p-1 px-5 text-base font-medium text-black hover:brightness-95"
             >
               Cancel
             </button>
@@ -234,7 +219,7 @@ const EditAccount = () => {
                   ]);
                 }
               }}
-              className=" rounded bg-[#62d5b5] p-1 px-5 text-base font-semibold text-white hover:brightness-110"
+              className=" rounded border-none bg-[#62d5b5] p-1 px-5 text-base font-semibold text-white hover:brightness-110"
             >
               Save
             </button>

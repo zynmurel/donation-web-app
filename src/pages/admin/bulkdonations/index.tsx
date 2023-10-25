@@ -1,27 +1,19 @@
-import { Card, Dropdown } from "antd";
+import { Dropdown } from "antd";
 import AdminLayout from "../layout";
-import { FaUserCircle } from "react-icons/fa";
 import { dropdownItems } from "../adminhelper/dropdownitems";
-import AdminAccount from "./account/Account";
+import { FaUserCircle } from "react-icons/fa";
+import CardItemLists from "./components/CardItemList";
 
-const Settings = () => {
-  const tabList = [
-    {
-      key: "Account",
-      tab: "Account",
-    },
-  ];
-
-  const contentList: Record<string, React.ReactNode> = {
-    Account: <AdminAccount />,
-  };
-
+const BulkDonations = () => {
   const items = dropdownItems();
   return (
     <AdminLayout>
       <div className=" flex min-h-full w-full flex-col">
         <div className=" flex items-center justify-between">
-          <div className=" invisible">s</div>
+          <span className=" p-3 text-3xl font-extrabold text-[#205b5d]">
+            Bulk Donations
+          </span>
+
           <Dropdown menu={{ items }} placement="bottomRight">
             <div className=" flex cursor-pointer flex-row items-center gap-1 rounded bg-[#f1ffff] p-1 px-3 text-[#205b5d] hover:brightness-95">
               <div className=" flex flex-col items-end">
@@ -31,12 +23,10 @@ const Settings = () => {
             </div>
           </Dropdown>
         </div>
-        <div className=" mx-auto w-3/5 flex-1 py-5">
-          {contentList["Account"]}
-        </div>
+        <CardItemLists />
       </div>
     </AdminLayout>
   );
 };
 
-export default Settings;
+export default BulkDonations;

@@ -3,7 +3,7 @@ import { BsCart3 } from "react-icons/bs";
 import type { MenuProps } from "antd";
 import { Typography } from "antd";
 import { useRouter } from "next/router";
-import { BiSolidDonateHeart } from "react-icons/bi";
+import { BiSolidBox, BiSolidDonateHeart } from "react-icons/bi";
 import { FaUserCog } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
@@ -24,12 +24,7 @@ const AdminMenu: React.FC = () => {
     {
       key: "/admin",
       icon: <MdDashboard size={20} />,
-      label: "Dashboard",
-    },
-    {
-      key: "/admin/donations",
-      icon: <BiSolidDonateHeart size={20} />,
-      label: "Donations",
+      label: "Mined Items",
     },
     {
       key: "/admin/students",
@@ -37,14 +32,24 @@ const AdminMenu: React.FC = () => {
       label: "Students",
     },
     {
-      key: "/admin/reports",
-      icon: <TbReportSearch size={20} />,
-      label: "Reports",
+      key: "/admin/donations",
+      icon: <BiSolidDonateHeart size={20} />,
+      label: "Small Donations",
     },
+    {
+      key: "/admin/bulkdonations",
+      icon: <BiSolidBox size={20} />,
+      label: "Bulk Donations",
+    },
+    // {
+    //   key: "/admin/reports",
+    //   icon: <TbReportSearch size={20} />,
+    //   label: "Reports",
+    // },
     {
       key: "/admin/settings",
       icon: <FaUserCog size={20} />,
-      label: "Account & Settings",
+      label: "Account",
     },
   ];
   const [current, setCurrent] = useState(path);

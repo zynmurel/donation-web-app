@@ -28,23 +28,9 @@ const ApprovedStudents = () => {
       render: (_: any, data: any) => {
         return (
           <>
-            {data.firstName} {data.lastName}
+            {data?.firstName} {data?.lastName}
           </>
         );
-      },
-    },
-    {
-      title: "Department",
-      key: "department",
-      render: (_: any, data: any) => {
-        return <>{data.department.acronym}</>;
-      },
-    },
-    {
-      title: "Course",
-      key: "course",
-      render: (_: any, data: any) => {
-        return <>{data.course.name}</>;
       },
     },
   ];

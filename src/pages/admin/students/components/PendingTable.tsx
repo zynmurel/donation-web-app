@@ -40,20 +40,6 @@ const PendingStudents = () => {
       },
     },
     {
-      title: "Department",
-      key: "department",
-      render: (_: any, data: any) => {
-        return <>{data.department.acronym}</>;
-      },
-    },
-    {
-      title: "Course",
-      key: "course",
-      render: (_: any, data: any) => {
-        return <>{data.course.name}</>;
-      },
-    },
-    {
       title: "Action",
       key: "action",
       align: "center",
@@ -68,7 +54,7 @@ const PendingStudents = () => {
               changeStatus({ id: record.id, status: "approved" })
             }
           >
-            <button className=" cursor-pointer rounded-lg border-none bg-green-300 p-3 hover:brightness-105">
+            <button className=" cursor-pointer rounded-lg border-none bg-green-400 p-3 hover:brightness-105">
               Approve
             </button>
           </Popconfirm>
@@ -79,7 +65,7 @@ const PendingStudents = () => {
             cancelText="Cancel"
             onConfirm={() => deleteStudent({ id: record.id })}
           >
-            <button className=" cursor-pointer rounded-lg border-none bg-red-300 p-3 hover:brightness-105">
+            <button className=" cursor-pointer rounded-lg border-none bg-red-400 p-3 hover:brightness-105">
               Remove
             </button>
           </Popconfirm>

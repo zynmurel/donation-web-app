@@ -9,7 +9,7 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
   corePlugins: {
     preflight: false,
   },

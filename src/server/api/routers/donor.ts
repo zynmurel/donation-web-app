@@ -45,11 +45,12 @@ export const donorRouter = createTRPCRouter({
     .input(
       z.object({
         username: z.string(),
-        firstName: z.string(),
-        lastName: z.string(),
+        name: z.string(),
+        address: z.string(),
         password: z.string(),
-        alumni: z.boolean(),
+        alumni: z.boolean().nullish(),
         contact: z.string(),
+        type: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -69,6 +70,7 @@ export const donorRouter = createTRPCRouter({
         return ctx.prisma.donor.create({
           data: {
             ...input,
+            alumni: input.alumni === null ? false : true,
           },
         });
       }
@@ -92,14 +94,14 @@ export const donorRouter = createTRPCRouter({
       z.object({
         id: z.string(),
         username: z.string(),
-        firstName: z.string(),
-        lastName: z.string(),
+        name: z.string(),
         alumni: z.boolean(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
       const hasDonor = await ctx.prisma.donor.findFirst({
         where: {
+          NOT: { id: { equals: input.id } },
           username: input.username,
         },
       });
@@ -116,7 +118,9 @@ export const donorRouter = createTRPCRouter({
             id: input.id,
           },
           data: {
-            ...input,
+            username: input.username,
+            name: input.name,
+            alumni: input.alumni,
           },
         });
       }

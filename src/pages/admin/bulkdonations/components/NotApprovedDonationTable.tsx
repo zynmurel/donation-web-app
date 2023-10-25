@@ -6,16 +6,17 @@ import { api } from "~/utils/api";
 
 const NotApprovedDonations = () => {
   const { openNotificationWithIcon } = useContext(NotificationContext);
-  const { data: donations, refetch } = api.item.getItemsByStatusQuery.useQuery({
-    status: "pending",
-  });
+  const { data: donations, refetch } =
+    api.item.getBulkDonationByStatus.useQuery({
+      status: "pending",
+    });
   const { mutate: changeStatus } = api.item.setItemsStatus.useMutation({
     onSuccess: () => {
       refetch();
       openNotificationWithIcon(
         "success",
         "Approved",
-        "Donation approved. Student can see this item in their dashboards",
+        "Donation Approved. You can now donate the item.",
       );
     },
   });
@@ -61,14 +62,14 @@ const NotApprovedDonations = () => {
       },
     },
     {
-      title: "Item",
-      dataIndex: "itemName",
-      key: "item",
-    },
-    {
       title: "Description",
       dataIndex: "description",
       key: "description",
+    },
+    {
+      title: "Type",
+      dataIndex: "type",
+      key: "type",
     },
     {
       title: "Quantity",

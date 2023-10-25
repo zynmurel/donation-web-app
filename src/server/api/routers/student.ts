@@ -31,8 +31,6 @@ export const studentRouter = createTRPCRouter({
         studentId: z.string(),
         firstName: z.string(),
         lastName: z.string(),
-        departmentId: z.string(),
-        courseId: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -68,10 +66,6 @@ export const studentRouter = createTRPCRouter({
         where: {
           status: input.status,
         },
-        include: {
-          course: true,
-          department: true,
-        },
       });
       return students;
     }),
@@ -106,5 +100,20 @@ export const studentRouter = createTRPCRouter({
         },
       });
       return students;
+    }),
+
+  findStudent: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .query(({ ctx, input }) => {
+      const donor = ctx.prisma.student.findUnique({
+        where: {
+          id: input.id,
+        },
+      });
+      return donor;
     }),
 });

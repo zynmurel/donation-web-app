@@ -1,4 +1,12 @@
-import { Button, Form, Input, Select, Upload, UploadFile } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  InputNumber,
+  Select,
+  Upload,
+  UploadFile,
+} from "antd";
 // import UploadButtonComponent from "./uploadImage";
 import { useContext, useState } from "react";
 import ImageUpload from "./imageUpload";
@@ -31,17 +39,18 @@ const AddDonationForm = () => {
       imageUrl: imageUrl,
       type: e.type,
       donorId: donorId || "",
-      item: e.item,
+      itemName: e.item,
+      quantity: e.quantity,
     });
   };
   return (
     <Form
       form={form}
       onFinish={onSubmitDonation}
-      className=" mx-auto mt-4 w-1/2 rounded-lg bg-[#ecf0f0]  p-20"
+      className=" mt-4 rounded-lg bg-[#ecf0f0] sm:mx-auto sm:w-1/2  sm:p-20"
     >
-      <div className="">
-        <div className="mb-10 text-center text-5xl font-extrabold text-[#3ba9ac]">
+      <div className="p-5 sm:p-0">
+        <div className=" text-center text-xl font-extrabold text-[#3ba9ac] sm:-mt-5 sm:mb-5 sm:text-5xl">
           Preloved/Item Details
         </div>
         <ImageUpload
@@ -49,7 +58,7 @@ const AddDonationForm = () => {
           imageUrl={imageUrl}
           setImageUrl={setImageUrl}
         />
-        <div className=" mb-1 text-lg font-bold">Name</div>
+        <div className=" font-bold sm:mb-1 sm:text-lg">Name</div>
         <Form.Item
           name={"item"}
           rules={[
@@ -61,24 +70,40 @@ const AddDonationForm = () => {
         >
           <Input size="large" placeholder="Input item name" />
         </Form.Item>
-        <div className=" mb-1 text-lg font-bold">Type of preloved/item</div>
+        <div className=" font-bold sm:mb-1 sm:text-lg">Type of Item</div>
         <Form.Item
           rules={[
             { required: true, message: "Type of preloved/item is required" },
           ]}
           name={"type"}
         >
-          <Select size="large" placeholder="Select type of preloved to donate">
-            <Select.Option value="Uniform">Uniform</Select.Option>
-            <Select.Option value="School Appliances">
-              School Appliances
+          <Select size="large" placeholder="Select type of item to donate">
+            <Select.Option value="small">
+              Small Donation ( For NWSSU Students)
             </Select.Option>
-            <Select.Option value="Others">Others</Select.Option>
+            <Select.Option value="bulk">
+              Bulk Donation ( For those in need )
+            </Select.Option>
           </Select>
         </Form.Item>
-        <div className=" mb-1 text-lg font-bold">Description</div>
+        <div className=" font-bold sm:mb-1 sm:text-lg">Description</div>
         <Form.Item
           name={"description"}
+          rules={[
+            {
+              required: true,
+              message: "Description of item is required",
+            },
+          ]}
+        >
+          <TextArea
+            size="large"
+            placeholder="Input item/preloved description"
+          />
+        </Form.Item>
+        <div className=" font-bold sm:mb-1 sm:text-lg">Quantity</div>
+        <Form.Item
+          name={"quantity"}
           rules={[
             {
               required: true,
@@ -86,9 +111,10 @@ const AddDonationForm = () => {
             },
           ]}
         >
-          <TextArea
+          <InputNumber
             size="large"
-            placeholder="Input item/preloved description"
+            className=" w-64"
+            placeholder="Input Quantity"
           />
         </Form.Item>
         <div className=" mt-10 flex w-full items-center gap-2">

@@ -123,7 +123,7 @@ const ImageUpload = ({
         },
       ]}
     >
-      <div className=" mb-1 text-lg font-bold">Upload Photo</div>
+      <div className=" font-bold sm:mb-1 sm:text-lg">Upload Photo</div>
       <Upload
         listType="picture-card"
         className="upload-list-inline"

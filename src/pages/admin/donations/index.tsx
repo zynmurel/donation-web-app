@@ -11,7 +11,7 @@ const StudentPage = () => {
       <div className=" flex min-h-full w-full flex-col">
         <div className=" flex items-center justify-between">
           <span className=" p-3 text-3xl font-extrabold text-[#205b5d]">
-            Donations
+            Small Donations
           </span>
 
           <Dropdown menu={{ items }} placement="bottomRight">

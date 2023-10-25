@@ -12,11 +12,7 @@ const OwnedDonations = () => {
       title: "Donor",
       dataIndex: "donor",
       key: "donor",
-      render: (donor: any) => (
-        <div>
-          {donor.firstName} {donor.lastName}
-        </div>
-      ),
+      render: (donor: any) => <div>{donor.name}</div>,
     },
     {
       title: "New Owner (Student)",
@@ -24,24 +20,24 @@ const OwnedDonations = () => {
       key: "student",
       render: (student: any) => (
         <div>
-          {student.firstName} {student.lastName}
+          {student?.firstName} {student?.lastName}
         </div>
       ),
     },
     {
       title: "Item",
-      dataIndex: "item",
+      dataIndex: "itemName",
       key: "item",
-    },
-    {
-      title: "Type",
-      dataIndex: "type",
-      key: "type",
     },
     {
       title: "Description",
       dataIndex: "description",
       key: "description",
+    },
+    {
+      title: "Quantity",
+      dataIndex: "quantity",
+      key: "quantity",
     },
     {
       title: "Image",

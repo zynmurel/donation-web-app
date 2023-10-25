@@ -7,6 +7,7 @@ import DonationLists from "./components/donationnLists";
 import { Dropdown, MenuProps } from "antd";
 import { AiOutlinePoweroff } from "react-icons/ai";
 import { useRouter } from "next/router";
+import { HiMenu } from "react-icons/hi";
 
 export interface ItemData {
   id: string;
@@ -63,42 +64,44 @@ const DonorPage = () => {
       ),
     },
   ];
+  const [activeButton, setActiveButton] = useState<boolean>(false);
   return (
-    <DonorLayout>
+    <DonorLayout activeButton={activeButton} setActiveButton={setActiveButton}>
       <div className=" flex min-h-full w-full flex-col">
-        <div className=" flex justify-between">
-          <div className="flex w-4/5 flex-col">
-            <span className=" p-3 text-3xl font-extrabold text-[#205b5d]">
+        <div className=" flex items-center justify-between sm:items-start">
+          <div className=" hidden w-4/5 flex-col sm:flex">
+            <span className=" text-xl font-extrabold text-[#205b5d] sm:p-3 sm:text-3xl">
               Your Donations
             </span>
-            <span className=" ml-3 rounded bg-blue-100 p-2 px-5  text-blue-900">
-              Notice: Your submission for "To Donate Items" will be moved to the
-              "Cancelled" category if the school does not receive the donated
-              items within 7 days prior to the inclusion of your item in the "To
-              Donate Items" list. You will have the option to resubmit the
-              "Cancelled Item" if you meet the deadline.{" "}
-            </span>
           </div>
+          <HiMenu
+            className="text-4xl sm:hidden sm:text-5xl"
+            color="green"
+            onClick={() => setActiveButton(!activeButton)}
+          />
 
           <Dropdown menu={{ items }} placement="bottomRight">
             <div className=" flex h-16 cursor-pointer flex-row items-center gap-1 rounded bg-[#f1ffff] p-1 px-3 text-[#205b5d] hover:brightness-95">
               <div className=" flex flex-col items-end">
                 <span className=" text-xl font-bold">Donor</span>
-                <span className=" -mt-1">
-                  {donor?.firstName} {donor?.lastName}
-                </span>
+                <span className=" -mt-1">{donor?.name}</span>
               </div>
               <FaUserCircle size={45} />
             </div>
           </Dropdown>
         </div>
-        <DonationMenu tabActive={tabActive} setTabActive={setTabActive} />
-        <DonationLists
-          setData={setData}
-          data={data}
-          tabActive={tabActive}
-          setTabActive={setTabActive}
-        />
+        <div
+          onClick={() => setActiveButton(false)}
+          style={{ maxHeight: "100vh", height: "100vh" }}
+        >
+          <DonationMenu tabActive={tabActive} setTabActive={setTabActive} />
+          <DonationLists
+            setData={setData}
+            data={data}
+            tabActive={tabActive}
+            setTabActive={setTabActive}
+          />
+        </div>
       </div>
     </DonorLayout>
   );

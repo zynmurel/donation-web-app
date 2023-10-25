@@ -3,10 +3,12 @@ import { useContext } from "react";
 import { NotificationContext } from "~/pages/context/contextproviders";
 import { api } from "~/utils/api";
 
-const ApprovedDonations = () => {
-  const { data: students, refetch } = api.item.getItemsByStatusQuery.useQuery({
-    status: "approved",
-  });
+const OwnedDonations = () => {
+  const { data: students, refetch } = api.item.getBulkDonationByStatus.useQuery(
+    {
+      status: "donated",
+    },
+  );
   const columns = [
     {
       title: "Donor",
@@ -15,14 +17,10 @@ const ApprovedDonations = () => {
       render: (donor: any) => <div>{donor.name}</div>,
     },
     {
-      title: "Item",
-      dataIndex: "itemName",
-      key: "item",
-    },
-    {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
+      title: "New Owner",
+      dataIndex: "bulkDonatedTo",
+      key: "donated",
+      render: (bulk: any) => <div>{bulk}</div>,
     },
     {
       title: "Quantity",
@@ -30,9 +28,20 @@ const ApprovedDonations = () => {
       key: "quantity",
     },
     {
+      title: "Type",
+      dataIndex: "type",
+      key: "type",
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
+    },
+    {
       title: "Image",
       dataIndex: "imageUrl",
       key: "image",
+      width: 20,
       render: (_: any) => {
         return <Image alt={"itemImage"} src={_} width={25} />;
       },
@@ -42,4 +51,4 @@ const ApprovedDonations = () => {
   return <Table columns={columns} dataSource={students} />;
 };
 
-export default ApprovedDonations;
+export default OwnedDonations;

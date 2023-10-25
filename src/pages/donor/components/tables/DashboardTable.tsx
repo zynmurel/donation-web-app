@@ -23,8 +23,17 @@ const ItemTable = ({
   scroll: number;
 }) => {
   return (
-    <div className=" mx-5 mb-5 flex-1 overflow-hidden rounded bg-white">
+    <div className=" mx-1 mb-1 flex-1 overflow-hidden rounded-xl bg-white sm:mx-5 sm:mb-5">
       <Table
+        className="flex sm:hidden"
+        size="small"
+        dataSource={data || []}
+        columns={columns}
+        pagination={false}
+        scroll={{ y: scroll }}
+      />
+      <Table
+        className="hidden sm:flex"
         dataSource={data || []}
         columns={columns}
         pagination={false}

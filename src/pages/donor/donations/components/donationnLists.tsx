@@ -63,12 +63,17 @@ const DonationLists = ({
     },
     {
       title: "Item name",
-      dataIndex: "item",
+      dataIndex: "itemName",
       width: 200,
       key: "item",
       render: (tag) => {
         return <>{tag?.toUpperCase()}</>;
       },
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
     },
     {
       title: "Type",
@@ -84,9 +89,9 @@ const DonationLists = ({
       },
     },
     {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
+      title: "Quantity",
+      dataIndex: "quantity",
+      key: "quantity",
     },
     {
       title: "Image",
@@ -148,7 +153,16 @@ const DonationLists = ({
   return isLoading ? (
     <>Loading...</>
   ) : (
-    <Table columns={columns} dataSource={data} />
+    <div className=" flex items-center justify-center">
+      <Table className="hidden sm:block " columns={columns} dataSource={data} />
+      <Table
+        scroll={{ x: 50 }}
+        size="small"
+        className="block sm:hidden"
+        columns={columns}
+        dataSource={data}
+      />
+    </div>
   );
 };
 

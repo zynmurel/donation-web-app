@@ -4,17 +4,22 @@ import dayjs from "dayjs";
 export const confirmedColumns = [
   {
     title: "Item",
-    dataIndex: "item",
+    dataIndex: "itemName",
     key: "item",
+  },
+  {
+    title: "Qty",
+    dataIndex: "quantity",
+    key: "quantity",
   },
   {
     title: "Status",
     dataIndex: "status",
     key: "status",
     render: (_: string, data: any) => {
-      if (_ === "confirmed") {
-        return <Tag>Item is in Stock</Tag>;
-      } else return <Tag color="yellowgreen">Donated to our Student</Tag>;
+      if (_ === "donated") {
+        return <Tag color="yellowgreen">Donated</Tag>;
+      } else return <Tag>In Stock</Tag>;
     },
   },
   {
@@ -38,7 +43,7 @@ export const pendingColumns = [
   },
   {
     title: "Item",
-    dataIndex: "item",
+    dataIndex: "itemName",
     key: "item",
   },
   {

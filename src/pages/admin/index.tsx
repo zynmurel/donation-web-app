@@ -1,22 +1,42 @@
 import { api } from "~/utils/api";
 import { FaUserCircle } from "react-icons/fa";
-import { Dropdown, MenuProps } from "antd";
+import { Card, Dropdown, MenuProps } from "antd";
 import { useRouter } from "next/router";
 import { AiOutlinePoweroff } from "react-icons/ai";
 import { dropdownItems } from "./adminhelper/dropdownitems";
 import AdminLayout from "./layout";
+import MinedItems from "./mined/MindItems";
+import { useState } from "react";
+import ApprovedItems from "./mined/ApprovedItems";
 
 const AdminPage = () => {
   const items = dropdownItems();
   const router = useRouter();
   const { data } = api.admin.findAdmin.useQuery();
-
+  const [activeTab, setActiveTab] = useState<string>("mined");
+  const tabList = [
+    {
+      key: "mined",
+      tab: "Mined Items",
+    },
+    {
+      key: "approved",
+      tab: "To Claim Items",
+    },
+  ];
+  const contentList: Record<string, React.ReactNode> = {
+    mined: <MinedItems />,
+    approved: <ApprovedItems />,
+  };
+  const onTab1Change = (key: string) => {
+    setActiveTab(key);
+  };
   return (
     <AdminLayout>
       <div className=" flex min-h-full w-full flex-col">
         <div className=" flex items-center justify-between">
           <span className=" p-3 text-3xl font-extrabold text-[#205b5d]">
-            Dashboard
+            Mined Item/s
           </span>
 
           <Dropdown menu={{ items }} placement="bottomRight">
@@ -28,6 +48,14 @@ const AdminPage = () => {
             </div>
           </Dropdown>
         </div>
+        <Card
+          style={{ width: "100%", height: "100%", flex: 1 }}
+          tabList={tabList}
+          activeTabKey={activeTab}
+          onTabChange={onTab1Change}
+        >
+          {contentList[activeTab]}
+        </Card>
       </div>
     </AdminLayout>
   );

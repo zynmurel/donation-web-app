@@ -57,7 +57,9 @@ const DonorLayout = ({ children, activeButton, setActiveButton }: any) => {
             activeButton={activeButton}
             setActiveButton={setActiveButton}
           />
-          <Content className=" w-full bg-white p-2 sm:p-0">{children}</Content>
+          <Content className="  bg-white p-2 sm:p-0" style={{ width: "83vw" }}>
+            {children}
+          </Content>
         </div>
       </Layout>
     </div>

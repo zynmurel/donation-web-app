@@ -13,11 +13,13 @@ const DonationLists = ({
   setData,
   tabActive,
   setTabActive,
+  mutate: mutateInMenu,
 }: {
   data: ItemData[];
   tabActive: string;
   setTabActive: any;
   setData: Dispatch<SetStateAction<ItemData[]>>;
+  mutate: any;
 }) => {
   const { openNotificationWithIcon } = useContext(NotificationContext);
   const { mutate, isLoading } = api.item.setItemsStatus.useMutation({
@@ -153,15 +155,62 @@ const DonationLists = ({
   return isLoading ? (
     <>Loading...</>
   ) : (
-    <div className=" flex items-center justify-center">
-      <Table className="hidden sm:block " columns={columns} dataSource={data} />
-      <Table
-        scroll={{ x: 50 }}
-        size="small"
-        className="block sm:hidden"
-        columns={columns}
-        dataSource={data}
-      />
+    <div>
+      <div className=" hidden sm:block">
+        <Table columns={columns} dataSource={data} className=" px-5" />
+      </div>
+      <div className=" flex flex-col gap-1   sm:hidden">
+        {data.map((data) => {
+          return (
+            <div className=" flex flex-row justify-between gap-1 rounded border border-solid border-gray-100 p-2  shadow-lg ">
+              <div className=" flex w-3/4 flex-col">
+                <span className=" text-lg font-semibold uppercase text-gray-900">
+                  {data.itemName}
+                </span>
+                <span className=" text-sm text-gray-700">
+                  Quantity : {data.quantity}
+                </span>
+                <span className=" text-sm text-gray-700">
+                  Description : {data.description}
+                </span>
+
+                {tabActive === "pending" && (
+                  <button
+                    onClick={() => mutate({ id: data.id, status: "cancelled" })}
+                    className="mt-1 w-28 rounded border-none bg-[#ea6b6b] p-1 text-white hover:brightness-105 sm:hidden"
+                  >
+                    Cancel Item
+                  </button>
+                )}
+                {tabActive === "cancelled" && (
+                  <div className=" mt-1 flex flex-row items-center gap-2">
+                    <button
+                      onClick={() => mutate({ id: data.id, status: "pending" })}
+                      className=" rounded border-none bg-[#5073c3] p-1 px-2 text-white hover:brightness-105"
+                    >
+                      Reprocess Item
+                    </button>
+                    <button
+                      onClick={() =>
+                        deleteItem({ id: data.id, donorId: data.donorId })
+                      }
+                      className=" rounded border-none bg-[#ff4646] p-1 px-2 text-white hover:brightness-105"
+                    >
+                      Delete Item
+                    </button>
+                  </div>
+                )}
+              </div>
+              <Image
+                alt="item-image"
+                src={data.imageUrl}
+                width={100}
+                height={100}
+              />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

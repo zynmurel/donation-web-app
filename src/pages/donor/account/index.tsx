@@ -29,7 +29,7 @@ const DonorPage = () => {
       key: "1",
       label: (
         <div
-          className=" flex w-full items-center justify-center gap-2 rounded-md bg-red-300 p-2 py-1 text-lg hover:brightness-95"
+          className=" flex w-full items-center justify-center gap-2 rounded-md bg-red-300 py-1 text-sm hover:brightness-95 sm:text-lg"
           onClick={() => {
             localStorage.clear();
             router.push("/donorLogin");

@@ -58,7 +58,7 @@ const AddDonationForm = () => {
           imageUrl={imageUrl}
           setImageUrl={setImageUrl}
         />
-        <div className=" font-bold sm:mb-1 sm:text-lg">Name</div>
+        <div className=" -mt-6 font-bold sm:mb-1 sm:mt-0 sm:text-lg">Name</div>
         <Form.Item
           name={"item"}
           rules={[
@@ -70,7 +70,9 @@ const AddDonationForm = () => {
         >
           <Input size="large" placeholder="Input item name" />
         </Form.Item>
-        <div className=" font-bold sm:mb-1 sm:text-lg">Type of Item</div>
+        <div className=" -mt-4 font-bold sm:mb-1 sm:mt-0 sm:text-lg">
+          Type of Item
+        </div>
         <Form.Item
           rules={[
             { required: true, message: "Type of preloved/item is required" },
@@ -86,7 +88,9 @@ const AddDonationForm = () => {
             </Select.Option>
           </Select>
         </Form.Item>
-        <div className=" font-bold sm:mb-1 sm:text-lg">Description</div>
+        <div className=" -mt-4 font-bold sm:mb-1 sm:mt-0 sm:text-lg">
+          Description
+        </div>
         <Form.Item
           name={"description"}
           rules={[
@@ -101,7 +105,9 @@ const AddDonationForm = () => {
             placeholder="Input item/preloved description"
           />
         </Form.Item>
-        <div className=" font-bold sm:mb-1 sm:text-lg">Quantity</div>
+        <div className=" -mt-4 font-bold sm:mb-1 sm:mt-0 sm:text-lg">
+          Quantity
+        </div>
         <Form.Item
           name={"quantity"}
           rules={[

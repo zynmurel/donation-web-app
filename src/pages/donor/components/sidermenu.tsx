@@ -74,10 +74,13 @@ const SiderMenu = ({ activeButton, setActiveButton }: any) => {
           );
         })}
       </div>
-      <div className=" hidden w-80 flex-col items-center gap-1 bg-[#3ba9ac] p-2  py-2 sm:flex">
+      <div
+        style={{ width: "17vw" }}
+        className=" hidden w-full flex-col items-center gap-1 bg-[#3ba9ac] p-2  py-2 sm:flex"
+      >
         <div className=" flex flex-col items-center justify-center rounded-lg  p-2">
           <img src="/nwssu.png" alt="nwssu" className=" w-1/2 " />
-          <div className=" -mt-3  rounded-lg text-center text-xl font-semibold text-white ">
+          <div className=" -mt-3  rounded-lg text-center text-lg font-semibold text-white ">
             NWSSU Donation App
           </div>
         </div>

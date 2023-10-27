@@ -116,4 +116,69 @@ export const studentRouter = createTRPCRouter({
       });
       return donor;
     }),
+  changeStudentPassword: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        password: z.string(),
+      }),
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.student.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          password: input.password,
+        },
+      });
+    }),
+  deactiveStudent: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.student.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          activated: false,
+        },
+      });
+    }),
+  deactiveAndCreateDonor: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        contact: z.string(),
+        address: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.student
+        .update({
+          where: {
+            id: input.id,
+          },
+          data: {
+            activated: false,
+          },
+        })
+        .then(async (data) => {
+          return await ctx.prisma.donor.create({
+            data: {
+              username: data.studentId,
+              name: `${data.firstName} ${data.lastName}`,
+              address: input.address,
+              password: data.password,
+              alumni: true,
+              contact: input.contact,
+              type: "Donor",
+            },
+          });
+        });
+    }),
 });

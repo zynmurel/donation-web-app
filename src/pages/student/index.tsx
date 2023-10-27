@@ -156,7 +156,7 @@ const StudentDashboard = () => {
             </div>
           </div>
         ) : (
-          <div className=" mt-10 flex h-1/3 w-10/12 flex-col items-center justify-center self-start rounded-xl bg-red-50 px-5 py-5 text-gray-500 shadow-xl sm:mt-0 sm:h-2/3 sm:w-2/4 sm:self-center">
+          <div className=" mt-10 flex h-1/3 w-10/12 flex-col items-center justify-center self-start rounded-xl bg-white px-5 py-5 text-gray-500 sm:mt-0 sm:h-2/3 sm:w-2/4 sm:self-center">
             <FaDropbox className=" mb-5" size={200} />
             <div className=" text-center text-xl font-medium uppercase text-gray-700 sm:text-5xl">
               {" "}

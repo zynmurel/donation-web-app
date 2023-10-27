@@ -44,7 +44,7 @@ const DonationLists = () => {
         <ItemTable
           data={confirmedItems}
           columns={confirmedColumns}
-          scroll={500}
+          scroll={400}
         />
       </div>
       <div className=" flex flex-1 flex-col gap-2 ">

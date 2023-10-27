@@ -61,7 +61,7 @@ const Layout = ({ children }: any) => {
           Donate
         </div>
       </div>
-      <div className=" hidden h-screen w-72 flex-col items-center bg-[#0000001c] p-2 py-3 sm:flex">
+      <div className=" hidden h-screen w-72 flex-col items-center bg-[#0000001c] sm:flex">
         <img src={"/nwssu.png"} alt={"logo"} width={180} />
         <div className=" -mt-3 text-lg font-semibold text-white">
           NWSSU DONATION

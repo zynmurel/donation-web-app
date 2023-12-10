@@ -13,6 +13,11 @@ export const confirmedColumns = [
     key: "quantity",
   },
   {
+    title: "Unit",
+    dataIndex: "unit",
+    key: "unit",
+  },
+  {
     title: "Status",
     dataIndex: "status",
     key: "status",

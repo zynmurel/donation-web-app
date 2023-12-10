@@ -43,6 +43,11 @@ const ApprovedItems = () => {
       render: (data: any) => <div>{data?.item?.quantity}</div>,
     },
     {
+      title: "Unit",
+      key: "unit",
+      render: (data: any) => <div>{data?.item?.unit}</div>,
+    },
+    {
       title: "Date & Time",
       key: "dt",
       render: (data: any) => (

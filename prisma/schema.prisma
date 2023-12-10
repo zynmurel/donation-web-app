@@ -11,17 +11,23 @@ datasource db {
 }
 
 model Donor {
-    id        String   @id @default(cuid())
-    name      String
-    type      String
-    username  String   @unique
-    password  String
-    alumni    Boolean?
-    contact   String?
-    address   String?
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    Item      Item[]
+    id             String   @id @default(cuid())
+    name           String
+    type           String
+    username       String   @unique
+    password       String
+    alumni         Boolean?
+    contact        String?
+    address        String?
+    degree         String?
+    college        String?
+    position       String?
+    lastAttended   String?
+    job            String?
+    yearsInCompany Int?
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt
+    Item           Item[]
 }
 
 model Student {
@@ -54,8 +60,11 @@ model Item {
     type          String
     status        String
     imageUrl      String
+    unit          String?
     bulkDonatedTo String?
     quantity      Int?
+    benefeciary   String?
+    location      String?
     student       Student?     @relation(fields: [studentId], references: [id])
     studentId     String?
     donor         Donor?       @relation(fields: [donorId], references: [id])

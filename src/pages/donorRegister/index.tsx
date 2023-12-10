@@ -1,6 +1,14 @@
 import Head from "next/head";
 import Link from "next/link";
-import { Button, Form, Input, Select } from "antd";
+import {
+  Button,
+  DatePicker,
+  Divider,
+  Form,
+  Input,
+  InputNumber,
+  Select,
+} from "antd";
 
 import { api } from "~/utils/api";
 import toast, { Toaster } from "react-hot-toast";
@@ -11,6 +19,7 @@ import { loginLocalStorage } from "../loghelper/loghelper";
 export default function Home() {
   const router = useRouter();
   const [donorType, setDonorType] = useState("Donor");
+  const [alumni, setAlumni] = useState(false);
   useEffect(() => {
     if (localStorage.getItem("user")) {
       router.push("/");
@@ -42,9 +51,32 @@ export default function Home() {
       alumni: e.alumni,
       contact: e.contact,
       type: e.type,
+      degree: e.degree,
+      college: e.college,
+      position: e.position,
+      lastAttended: e.lastAttended?.$y.toString(),
+      job: e.job,
+      yearsInCompany: e.yearsInCompany,
+    });
+    console.log({
+      username: e.username,
+      name: e.name,
+      address: e.address,
+      password: e.password,
+      alumni: e.alumni,
+      contact: e.contact,
+      type: e.type,
+      degree: e.degree,
+      college: e.college,
+      position: e.position,
+      lastAttended: e.lastAttended?.$y.toString(),
+      job: e.job,
+      yearsInCompany: e.yearsInCompany,
     });
   };
   useEffect(() => {
+    setAlumni(false);
+    form.resetFields();
     form.setFieldValue("type", donorType);
   }, [donorType]);
   return (
@@ -136,7 +168,11 @@ export default function Home() {
                         name="alumni"
                         rules={[{ required: true, message: "" }]}
                       >
-                        <Select placeholder={"Alumni of NWSSU?"} size="large">
+                        <Select
+                          placeholder={"Alumni of NWSSU?"}
+                          onChange={(e) => setAlumni(e)}
+                          size="large"
+                        >
                           {[
                             { id: true, name: "Yes" },
                             { id: false, name: "No" },
@@ -150,6 +186,95 @@ export default function Home() {
                     </div>
                   )}
                 </div>
+                {alumni && donorType === "Donor" && (
+                  <>
+                    <span className=" pl-1 text-base text-slate-600">
+                      Alumni Details:
+                    </span>
+                    <Divider style={{ margin: 4 }} />
+                    <div className=" flex w-full flex-row justify-between gap-1">
+                      <div className=" flex flex-1 flex-col">
+                        <span className=" pl-1 text-sm text-slate-600">
+                          College Attended
+                        </span>
+                        <Form.Item
+                          name="college"
+                          rules={[{ required: true, message: "" }]}
+                        >
+                          <Input
+                            size="large"
+                            placeholder="Northwest Samar State University"
+                          />
+                        </Form.Item>
+                      </div>
+
+                      <div className=" flex flex-col">
+                        <span className=" pl-1 text-sm text-slate-600">
+                          Last year attended
+                        </span>
+                        <Form.Item
+                          name={"lastAttended"}
+                          rules={[{ required: true, message: "" }]}
+                        >
+                          <DatePicker
+                            size="large"
+                            style={{ width: 200 }}
+                            picker="year"
+                          />
+                        </Form.Item>
+                      </div>
+                    </div>
+                    <div className=" flex w-full flex-row justify-between gap-1">
+                      <div className=" flex flex-1 flex-col">
+                        <span className=" pl-1 text-sm text-slate-600">
+                          Degree
+                        </span>
+                        <Form.Item
+                          name="degree"
+                          rules={[{ required: true, message: "" }]}
+                        >
+                          <Input
+                            size="large"
+                            placeholder="BS in Information Technology"
+                          />
+                        </Form.Item>
+                      </div>
+
+                      <div className=" flex flex-1 flex-col">
+                        <span className=" pl-1 text-sm text-slate-600">
+                          Current Job (Optional)
+                        </span>
+                        <Form.Item name="job">
+                          <Input size="large" placeholder="Input job" />
+                        </Form.Item>
+                      </div>
+                    </div>
+                    <div className=" flex w-full flex-row justify-between gap-1">
+                      <div className=" flex flex-1 flex-col">
+                        <span className=" pl-1 text-sm text-slate-600">
+                          Position in Job (Optional)
+                        </span>
+                        <Form.Item name="position">
+                          <Input size="large" />
+                        </Form.Item>
+                      </div>
+
+                      <div className=" flex flex-col">
+                        <span className=" pl-1 text-sm text-slate-600">
+                          Years in Company
+                        </span>
+                        <Form.Item name="yearsInCompany">
+                          <InputNumber
+                            size="large"
+                            width={200}
+                            style={{ width: 200 }}
+                          />
+                        </Form.Item>
+                      </div>
+                    </div>
+                    <Divider style={{ marginTop: 0, marginBottom: 10 }} />
+                  </>
+                )}
                 <div className=" flex flex-1 flex-col">
                   <span className=" pl-1 text-sm text-slate-600">
                     {donorType + " address"}

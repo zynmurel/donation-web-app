@@ -96,13 +96,17 @@ const DonationLists = ({
       key: "quantity",
     },
     {
+      title: "Unit",
+      dataIndex: "unit",
+      key: "unit",
+    },
+    {
       title: "Image",
       key: "imageUrl",
       width: 200,
       align: "center",
       dataIndex: "imageUrl",
       render: (_, data) => {
-        console.log(_, data);
         return <Image src={_} height={50} />;
       },
     },

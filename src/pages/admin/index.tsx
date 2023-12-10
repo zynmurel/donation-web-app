@@ -8,6 +8,7 @@ import AdminLayout from "./layout";
 import MinedItems from "./mined/MindItems";
 import { useState } from "react";
 import ApprovedItems from "./mined/ApprovedItems";
+import ClaimedItems from "./mined/ClaimedItems";
 
 const AdminPage = () => {
   const items = dropdownItems();
@@ -17,16 +18,21 @@ const AdminPage = () => {
   const tabList = [
     {
       key: "mined",
-      tab: "Mined Items",
+      tab: "Mined Item/s",
     },
     {
       key: "approved",
-      tab: "To Claim Items",
+      tab: "To Claim Item/s",
+    },
+    {
+      key: "claimed",
+      tab: "Claimed Item/s",
     },
   ];
   const contentList: Record<string, React.ReactNode> = {
     mined: <MinedItems />,
     approved: <ApprovedItems />,
+    claimed: <ClaimedItems />,
   };
   const onTab1Change = (key: string) => {
     setActiveTab(key);

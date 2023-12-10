@@ -1,4 +1,5 @@
 import { TRPCError } from "@trpc/server";
+import dayjs from "dayjs";
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
@@ -14,6 +15,9 @@ export const itemsRouter = createTRPCRouter({
         donorId: z.string(),
         itemName: z.string(),
         quantity: z.number(),
+        unit: z.string(),
+        bulkDonatedTo: z.string().optional(),
+        location: z.string().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -36,7 +40,10 @@ export const itemsRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const donated = await ctx.prisma.item.findMany({
         where: {
-          AND: [{ status: "donated" }, { donorId: input.donorId }],
+          AND: [
+            { status: "approved" || "confirmed" },
+            { donorId: input.donorId },
+          ],
         },
       });
       const item = await ctx.prisma.item.findMany({
@@ -53,8 +60,8 @@ export const itemsRouter = createTRPCRouter({
 
   setItemsStatus: publicProcedure
     .input(z.object({ id: z.string(), status: z.string() }))
-    .mutation(({ ctx, input }) => {
-      return ctx.prisma.item.update({
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.item.update({
         where: {
           id: input.id,
         },
@@ -131,7 +138,6 @@ export const itemsRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.string(),
-        donateTo: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -141,7 +147,6 @@ export const itemsRouter = createTRPCRouter({
         },
         data: {
           status: "donated",
-          bulkDonatedTo: input.donateTo,
         },
       });
       return students;
@@ -248,6 +253,18 @@ export const itemsRouter = createTRPCRouter({
     });
     return confirmedItems;
   }),
+  getClaimedItems: publicProcedure.query(async ({ ctx }) => {
+    const confirmedItems = await ctx.prisma.itemToMine.findMany({
+      where: {
+        status: "claimed",
+      },
+      include: {
+        student: true,
+        item: true,
+      },
+    });
+    return confirmedItems;
+  }),
   getApprovedItems: publicProcedure
     .input(
       z.object({
@@ -336,5 +353,73 @@ export const itemsRouter = createTRPCRouter({
           id: input.id,
         },
       });
+    }),
+  getDonatedBulk: publicProcedure
+    .input(
+      z.object({
+        date: z.date(),
+      }),
+    )
+    .query(({ ctx, input }) => {
+      const bulkPerMonth = ctx.prisma.item.findMany({
+        where: {
+          type: "bulk",
+          updatedAt: {
+            gte: dayjs(input.date).startOf("month").toDate(),
+            lte: dayjs(input.date).endOf("month").toDate(),
+          },
+        },
+        include: {
+          donor: true,
+        },
+      });
+      return bulkPerMonth;
+    }),
+  getSmallDonations: publicProcedure
+    .input(
+      z.object({
+        date: z.date(),
+      }),
+    )
+    .query(({ ctx, input }) => {
+      const bulkPerMonth = ctx.prisma.itemToMine.findMany({
+        where: {
+          status: "claimed",
+          updatedAt: {
+            gte: dayjs(input.date).startOf("month").toDate(),
+            lte: dayjs(input.date).endOf("month").toDate(),
+          },
+        },
+        include: {
+          student: true,
+          item: {
+            include: {
+              donor: true,
+            },
+          },
+        },
+      });
+      return bulkPerMonth;
+    }),
+  getDonatedItemsByMonth: publicProcedure
+    .input(
+      z.object({
+        date: z.date(),
+      }),
+    )
+    .query(({ ctx, input }) => {
+      const donatedPerMonth = ctx.prisma.item.findMany({
+        where: {
+          OR: [{ status: "donated" }, { status: "confirmed" }],
+          updatedAt: {
+            gte: dayjs(input.date).startOf("month").toDate(),
+            lte: dayjs(input.date).endOf("month").toDate(),
+          },
+        },
+        include: {
+          donor: true,
+        },
+      });
+      return donatedPerMonth;
     }),
 });

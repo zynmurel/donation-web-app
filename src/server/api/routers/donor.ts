@@ -51,6 +51,12 @@ export const donorRouter = createTRPCRouter({
         alumni: z.boolean().nullish(),
         contact: z.string(),
         type: z.string(),
+        degree: z.string().optional(),
+        college: z.string().optional(),
+        position: z.string().optional(),
+        lastAttended: z.string().optional(),
+        job: z.string().optional(),
+        yearsInCompany: z.number().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {

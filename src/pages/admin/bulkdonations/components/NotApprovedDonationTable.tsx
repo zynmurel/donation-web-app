@@ -72,9 +72,12 @@ const NotApprovedDonations = () => {
       key: "type",
     },
     {
-      title: "Quantity",
+      title: "Qty & Unit",
       dataIndex: "quantity",
       key: "quantity",
+      render: (_: any, data: any) => {
+        return <div>{`${data.quantity} ${data.unit}`}</div>;
+      },
     },
     {
       title: "Image",

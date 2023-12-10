@@ -41,11 +41,11 @@ const AdminMenu: React.FC = () => {
       icon: <BiSolidBox size={20} />,
       label: "Bulk Donations",
     },
-    // {
-    //   key: "/admin/reports",
-    //   icon: <TbReportSearch size={20} />,
-    //   label: "Reports",
-    // },
+    {
+      key: "/admin/reports",
+      icon: <TbReportSearch size={20} />,
+      label: "Reports",
+    },
     {
       key: "/admin/settings",
       icon: <FaUserCog size={20} />,

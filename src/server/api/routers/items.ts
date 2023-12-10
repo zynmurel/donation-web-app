@@ -156,9 +156,13 @@ export const itemsRouter = createTRPCRouter({
       where: {
         status: "approved",
         type: "small",
+        quantity: { gt: 0 },
       },
       include: {
         ItemToMine: {
+          where: {
+            status: null,
+          },
           orderBy: {
             updatedAt: "asc",
           },
@@ -177,28 +181,41 @@ export const itemsRouter = createTRPCRouter({
         id: z.string(),
         studentId: z.string(),
         itemToMineId: z.string(),
+        quantity: z.number(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      const item = await ctx.prisma.item.findUnique({
+        where: {
+          id: input.id,
+        },
+      });
+      const data: any = {
+        studentId: input.studentId,
+        quantity: (item?.quantity || 0) - input.quantity,
+      };
+      if ((item?.quantity || 0) - input.quantity < 0) {
+        data.status = "confirmed";
+      }
       return await ctx.prisma.item
         .update({
           where: {
             id: input.id,
           },
-          data: {
-            studentId: input.studentId,
-            status: "confirmed",
-          },
+          data: data,
         })
         .then((data) => {
-          return ctx.prisma.itemToMine.updateMany({
-            where: {
-              itemID: data.id,
-            },
-            data: {
-              status: "denied",
-            },
-          });
+          if ((data?.quantity || 0) <= 0) {
+            return ctx.prisma.itemToMine.updateMany({
+              where: {
+                itemID: data.id,
+                status: null,
+              },
+              data: {
+                status: "denied",
+              },
+            });
+          }
         })
         .then(() => {
           return ctx.prisma.itemToMine.update({
@@ -224,6 +241,7 @@ export const itemsRouter = createTRPCRouter({
         .update({
           where: {
             id: input.itemId,
+            quantity: { lte: 0 },
           },
           data: {
             studentId: input.studentId,
@@ -307,6 +325,7 @@ export const itemsRouter = createTRPCRouter({
       z.object({
         studentId: z.string(),
         itemID: z.string(),
+        quantity: z.number(),
       }),
     )
     .mutation(({ ctx, input }) => {
@@ -314,6 +333,7 @@ export const itemsRouter = createTRPCRouter({
         data: {
           studentId: input.studentId,
           itemID: input.itemID,
+          quantity: input.quantity,
         },
       });
       return createItemToMine;

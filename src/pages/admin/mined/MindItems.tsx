@@ -33,6 +33,7 @@ const MinedItems = () => {
       id: dataToView?.id || "",
       studentId: studentToDonate?.student?.id,
       itemToMineId: studentToDonate?.id,
+      quantity: dataToView?.ItemToMine?.[0]?.quantity || 0,
     });
   };
 
@@ -55,6 +56,16 @@ const MinedItems = () => {
           {data?.student?.firstName} {data?.student?.lastName}
         </div>
       ),
+    },
+    {
+      title: "Qty",
+      key: "quantity",
+      render: (data: any) => <div>{data?.quantity}</div>,
+    },
+    {
+      title: "Unit",
+      key: "unit",
+      render: (data: any) => <div>{data?.item?.unit}</div>,
     },
     {
       title: "Date & Time",
@@ -101,7 +112,7 @@ const MinedItems = () => {
                 </span>
                 <span className="text-base font-medium">
                   <span>Quantity : </span>
-                  {dataToView?.quantity}
+                  {dataToView?.ItemToMine?.[0]?.quantity}
                 </span>
                 <span className="text-base font-medium">
                   <span>Description : </span>
@@ -163,7 +174,7 @@ const MinedItems = () => {
                         </div>
                         <div className=" text-[#508687]">
                           <span>Qty : </span>
-                          <span>{dt.quantity}</span>
+                          <span>{dt?.quantity}</span>
                         </div>
                       </div>
                     </div>

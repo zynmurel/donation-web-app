@@ -2,7 +2,7 @@ import { api } from "~/utils/api";
 import Layout from "./layout";
 import { FaDropbox } from "react-icons/fa";
 import { useState } from "react";
-import { Image, Modal } from "antd";
+import { Image, InputNumber, Modal } from "antd";
 import toast, { Toaster } from "react-hot-toast";
 
 const StudentDashboard = () => {
@@ -10,6 +10,7 @@ const StudentDashboard = () => {
   if (typeof window !== "undefined") {
     user = localStorage.getItem("id");
   }
+  const [quantity, setQuantity] = useState(1);
   const [viewItem, setViewItem] = useState<any>(null);
   const { data: student } = api.student.findStudent.useQuery({
     id: user || "some",
@@ -33,11 +34,13 @@ const StudentDashboard = () => {
     mutate({
       itemID: viewItem?.id || "",
       studentId: student?.id || "",
+      quantity: quantity,
     });
   };
 
   const handleCancel = () => {
     setViewItem(null);
+    setQuantity(1);
   };
   return (
     <Layout student={student}>
@@ -80,20 +83,37 @@ const StudentDashboard = () => {
             </div>
           </div>
           {student?.status === "approved" && (
-            <div className=" mt-2 flex w-full justify-end gap-2">
-              <div
-                onClick={handleCancel}
-                className="flex-none cursor-pointer rounded border border-solid border-gray-200 bg-white p-1 px-3 text-center"
-              >
-                Close
+            <>
+              <div>
+                <div className=" flex flex-col items-center justify-center">
+                  <span>Quantity</span>
+                  <InputNumber
+                    defaultValue={quantity}
+                    value={quantity}
+                    onChange={(e) => {
+                      console.log(e && e <= viewItem?.quantity);
+                      if (e && e <= viewItem?.quantity) {
+                        setQuantity(e);
+                      }
+                    }}
+                  />
+                </div>
               </div>
-              <div
-                onClick={handleOk}
-                className="flex-none cursor-pointer rounded border border-solid border-teal-400 bg-teal-400 p-1  px-5 text-center text-white hover:brightness-90"
-              >
-                Mine
+              <div className=" mt-2 flex w-full justify-end gap-2">
+                <div
+                  onClick={handleCancel}
+                  className="flex-none cursor-pointer rounded border border-solid border-gray-200 bg-white p-1 px-3 text-center"
+                >
+                  Close
+                </div>
+                <div
+                  onClick={handleOk}
+                  className="flex-none cursor-pointer rounded border border-solid border-teal-400 bg-teal-400 p-1  px-5 text-center text-white hover:brightness-90"
+                >
+                  Mine
+                </div>
               </div>
-            </div>
+            </>
           )}
         </div>
       </Modal>

@@ -40,7 +40,7 @@ const ClaimedItems = () => {
     {
       title: "Qty",
       key: "id",
-      render: (data: any) => <div>{data?.item?.quantity}</div>,
+      render: (data: any) => <div>{data?.quantity}</div>,
     },
     {
       title: "Unit",

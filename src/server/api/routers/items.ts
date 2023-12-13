@@ -241,7 +241,7 @@ export const itemsRouter = createTRPCRouter({
         .update({
           where: {
             id: input.itemId,
-            quantity: { lte: 0 },
+            quantity: { gte: 0 },
           },
           data: {
             studentId: input.studentId,

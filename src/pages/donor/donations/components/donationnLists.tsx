@@ -7,6 +7,7 @@ import { ColumnsType } from "antd/es/table";
 import { api } from "~/utils/api";
 import { Dispatch, SetStateAction, useContext } from "react";
 import { NotificationContext } from "~/pages/context/contextproviders";
+import { useRouter } from "next/router";
 
 const DonationLists = ({
   data,
@@ -21,6 +22,7 @@ const DonationLists = ({
   setData: Dispatch<SetStateAction<ItemData[]>>;
   mutate: any;
 }) => {
+  const router = useRouter();
   const { openNotificationWithIcon } = useContext(NotificationContext);
   const { mutate, isLoading } = api.item.setItemsStatus.useMutation({
     onSuccess: (data) => {
@@ -100,14 +102,33 @@ const DonationLists = ({
       dataIndex: "unit",
       key: "unit",
     },
+    // {
+    //   title: "Image",
+    //   key: "imageUrl",
+    //   width: 200,
+    //   align: "center",
+    //   dataIndex: "imageUrl",
+    //   render: (_, data) => {
+    //     return <Image src={_} height={50} />;
+    //   },
+    // },
     {
-      title: "Image",
+      title: "View Item",
       key: "imageUrl",
       width: 200,
       align: "center",
-      dataIndex: "imageUrl",
+      dataIndex: "id",
       render: (_, data) => {
-        return <Image src={_} height={50} />;
+        return (
+          <div className=" flex flex-row items-center justify-center">
+            <div
+              onClick={() => router.push("/donor/" + _)}
+              className=" cursor-pointer rounded-full bg-green-300 px-4 py-1"
+            >
+              View
+            </div>
+          </div>
+        );
       },
     },
   ];

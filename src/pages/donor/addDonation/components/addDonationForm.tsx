@@ -22,7 +22,10 @@ const AddDonationForm = () => {
   const router = useRouter();
   const { mutate, isLoading } = api.item.addItem.useMutation({
     onSuccess: () => {
-      openNotificationWithIcon("success", "Item to Donate Added");
+      openNotificationWithIcon(
+        "success",
+        "Item to Donate Added. Please Deliver Your item to our Admin Office to avoid cancelation",
+      );
       form.resetFields();
       router.push("/donor/donations");
     },
@@ -82,7 +85,9 @@ const AddDonationForm = () => {
           imageUrl={imageUrl}
           setImageUrl={setImageUrl}
         />
-        <div className=" -mt-6 font-bold sm:mb-1 sm:mt-0 sm:text-lg">Name</div>
+        <div className=" -mt-6 font-bold sm:mb-1 sm:mt-0 sm:text-lg">
+          Name of Item to be donated
+        </div>
         <Form.Item
           name={"item"}
           rules={[
@@ -144,7 +149,7 @@ const AddDonationForm = () => {
           </>
         )}
         <div className=" -mt-4 font-bold sm:mb-1 sm:mt-0 sm:text-lg">
-          Description
+          Description of Item to be donated
         </div>
         <Form.Item
           name={"description"}

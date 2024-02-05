@@ -46,6 +46,16 @@ const DonationMenu = ({ tabActive, setTabActive }: any) => {
           >
             Confirmed <span className=" hidden sm:inline">Donations</span>
           </div>
+          <div
+            onClick={() => setTabActive("donated")}
+            className={` flex-1 cursor-pointer rounded-full  p-1 text-center text-base transition-all sm:flex-none sm:p-2 sm:px-5 sm:text-lg ${
+              tabActive === "donated"
+                ? "bg-[#3ba9ac] text-white"
+                : " bg-slate-50 text-[#3ba9ac] hover:brightness-95"
+            }`}
+          >
+            Donated <span className=" hidden sm:inline">Items</span>
+          </div>
         </div>
         <button
           onClick={() => router.push("/donor/addDonation")}

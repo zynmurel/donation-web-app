@@ -123,7 +123,9 @@ const ImageUpload = ({
         },
       ]}
     >
-      <div className=" font-bold sm:mb-1 sm:text-lg">Upload Photo</div>
+      <div className=" font-bold sm:mb-1 sm:text-lg">
+        Upload Photo of Item to be donated
+      </div>
       <Upload
         listType="picture-card"
         className="upload-list-inline"

@@ -16,7 +16,7 @@ export default function Home() {
     } else if (localStorage.getItem("user") === "admin") {
       router.push("/admin");
     } else if (localStorage.getItem("user") === "donor") {
-      router.push("/donor");
+      router.push("/donor/donations");
     }
   });
   const [form] = Form.useForm();

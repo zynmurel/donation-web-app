@@ -20,15 +20,15 @@ const SiderMenu = ({ activeButton, setActiveButton }: any) => {
   const router = useRouter();
   const path = router.pathname;
   const items: MenuItem[] = [
-    {
-      key: "/donor",
-      icon: <MdDashboard size={20} />,
-      label: "Dashboard",
-    },
+    // {
+    //   key: "/donor",
+    //   icon: <MdDashboard size={20} />,
+    //   label: "Dashboard",
+    // },
     {
       key: "/donor/donations",
       icon: <BiSolidDonateHeart size={20} />,
-      label: "Your Donations",
+      label: "Dashboard",
     },
     {
       key: "/donor/account",

@@ -1,7 +1,7 @@
 import { api } from "~/utils/api";
 import DonorLayout from "./layout";
 import { useEffect, useState } from "react";
-import { FaUserCircle } from "react-icons/fa";
+import { FaUserCircle, FaUserCog } from "react-icons/fa";
 import DonationMenu from "./components/donationMenu";
 import DonationLists from "./components/donationLists";
 import { Dropdown, MenuProps } from "antd";
@@ -20,6 +20,20 @@ const DonorPage = () => {
     id: user || "",
   });
   const items: MenuProps["items"] = [
+    {
+      key: "2",
+      label: (
+        <div
+          className=" flex w-full items-center justify-center gap-2 rounded-md  py-1 text-sm hover:brightness-95 sm:text-lg"
+          onClick={() => {
+            router.push("/donor/account");
+          }}
+        >
+          <FaUserCog />
+          Account
+        </div>
+      ),
+    },
     {
       key: "1",
       label: (

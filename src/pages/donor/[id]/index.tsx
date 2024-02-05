@@ -7,10 +7,10 @@ import DonationLists from "../components/donationLists";
 import { Dropdown, MenuProps } from "antd";
 import { AiOutlinePoweroff } from "react-icons/ai";
 import { useRouter } from "next/router";
-import EditAccount from "./components/editAccount";
+import EditAccount from "../account/components/editAccount";
 import { HiMenu } from "react-icons/hi";
 
-const DonorPage = () => {
+const DonatedItem = () => {
   const router = useRouter();
   const [tabActive, setTabActive] = useState("approved");
   let user;
@@ -79,11 +79,11 @@ const DonorPage = () => {
           className=" mx-5 sm:mx-auto sm:w-2/5"
           onClick={() => setActiveButton(false)}
         >
-          <EditAccount />
+          {/* <EditAccount /> */}
         </div>
       </div>
     </DonorLayout>
   );
 };
 
-export default DonorPage;
+export default DonatedItem;

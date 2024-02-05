@@ -55,6 +55,7 @@ model Admin {
 
 model Item {
     id            String       @id @default(cuid())
+    itemNo        Int?         @default(autoincrement())
     description   String?
     itemName      String?
     type          String

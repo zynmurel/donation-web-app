@@ -421,25 +421,43 @@ export const itemsRouter = createTRPCRouter({
       });
       return bulkPerMonth;
     }),
-  getDonatedItemsByMonth: publicProcedure
-    .input(
-      z.object({
-        date: z.date(),
-      }),
-    )
-    .query(({ ctx, input }) => {
-      const donatedPerMonth = ctx.prisma.item.findMany({
-        where: {
-          OR: [{ status: "donated" }, { status: "confirmed" }],
-          updatedAt: {
-            gte: dayjs(input.date).startOf("month").toDate(),
-            lte: dayjs(input.date).endOf("month").toDate(),
+    getDonatedItemsByMonth: publicProcedure
+      .input(
+        z.object({
+          date: z.date(),
+        }),
+      )
+      .query(({ ctx, input }) => {
+        const donatedPerMonth = ctx.prisma.item.findMany({
+          where: {
+            OR: [{ status: "donated" }, { status: "confirmed" }],
+            updatedAt: {
+              gte: dayjs(input.date).startOf("month").toDate(),
+              lte: dayjs(input.date).endOf("month").toDate(),
+            },
           },
-        },
-        include: {
-          donor: true,
-        },
-      });
-      return donatedPerMonth;
-    }),
+          include: {
+            donor: true,
+          },
+        });
+        return donatedPerMonth;
+      }),
+      getSingleItem: publicProcedure
+        .input(
+          z.object({
+            id:z.string()
+          }),
+        )
+        .query(({ ctx, input }) => {
+          const donatedPerMonth = ctx.prisma.item.findUnique({
+            where: {
+              id:input.id
+            },
+            include: {
+              donor: true,
+              student:true
+            },
+          });
+          return donatedPerMonth;
+        }),
 });

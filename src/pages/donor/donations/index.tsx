@@ -34,7 +34,7 @@ const DonorPage = () => {
     id: user || "",
   });
   const { mutate, isLoading } = api.item.getItemsByStatus.useMutation({
-    onSuccess: (data) => setData(data),
+    onSuccess: (data) => setData(data as ItemData[]),
   });
   useEffect(() => {
     console.log(donor);
@@ -46,9 +46,7 @@ const DonorPage = () => {
       alsoDonated: tabActive === "confirmed" ? true : false,
     });
   }, [tabActive, user]);
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+
   const items: MenuProps["items"] = [
     {
       key: "2",
@@ -56,7 +54,7 @@ const DonorPage = () => {
         <div
           className=" flex w-full items-center justify-center gap-2 rounded-md  py-1 text-sm hover:brightness-95 sm:text-lg"
           onClick={() => {
-            router.push("/donor/account");
+            void router.push("/donor/account");
           }}
         >
           <FaUserCog />
@@ -71,7 +69,7 @@ const DonorPage = () => {
           className=" flex w-full items-center justify-center gap-2 rounded-md bg-red-300 py-1 text-sm hover:brightness-95 sm:text-lg"
           onClick={() => {
             localStorage.clear();
-            router.push("/donorLogin");
+            void router.push("/donorLogin");
           }}
         >
           <AiOutlinePoweroff />

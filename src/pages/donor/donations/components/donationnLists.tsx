@@ -1,3 +1,9 @@
+/* eslint-disable react/jsx-key */
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { LikeOutlined, MessageOutlined, StarOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 
@@ -86,11 +92,11 @@ const DonationLists = ({
         return <>{tag?.toUpperCase()}</>;
       },
     },
-    {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
-    },
+    // {
+    //   title: "Description",
+    //   dataIndex: "description",
+    //   key: "description",
+    // },
     {
       title: "Type",
       dataIndex: "type",
@@ -108,12 +114,15 @@ const DonationLists = ({
       title: "Quantity",
       dataIndex: "quantity",
       key: "quantity",
+      render: (_, data) => {
+        return <>{`${_} ${data.unit}`}</>
+      }
     },
-    {
-      title: "Unit",
-      dataIndex: "unit",
-      key: "unit",
-    },
+    // {
+    //   title: "Unit",
+    //   dataIndex: "unit",
+    //   key: "unit",
+    // },
     // {
     //   title: "Image",
     //   key: "imageUrl",
@@ -158,13 +167,13 @@ const DonationLists = ({
               onClick={() => mutate({ id: data.id, status: "pending" })}
               className=" rounded border-none bg-[#5073c3] p-2 text-white hover:brightness-105"
             >
-              Reprocess Item
+              Reprocess
             </button>
             <button
               onClick={() => deleteItem({ id: data.id, donorId: data.donorId })}
               className=" rounded border-none bg-[#ff1414] p-2 text-white hover:brightness-105"
             >
-              Delete Item
+              Delete
             </button>
           </div>
         );
@@ -183,7 +192,7 @@ const DonationLists = ({
             onClick={() => mutate({ id: data.id, status: "cancelled" })}
             className=" rounded border-none bg-[#ea6b6b] p-2 text-white hover:brightness-105"
           >
-            Cancel Item
+            Cancel
           </button>
         );
       },

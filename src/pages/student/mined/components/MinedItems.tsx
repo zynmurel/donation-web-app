@@ -133,14 +133,9 @@ const MinedItemsList = ({ student }: any) => {
             return (
               <div className=" flex flex-row items-center justify-between rounded border border-solid border-gray-100 p-2">
                 <div className=" flex flex-1 flex-row items-center">
-                  <Image
-                    alt="image"
-                    src={data.item?.imageUrl}
-                    height={60}
-                    width={60}
-                  />
                   <div className=" flex flex-1 flex-col px-3">
                     <div className=" text-sm font-semibold">
+                      {`#${pad(data.item?.itemNo, 5)} - `}
                       {data.item?.itemName}
                     </div>
                     <div className=" text-xs">

@@ -53,16 +53,28 @@ const DonationLists = ({
       color = "bg-[#e6fff6]";
       break;
   }
+  const pad = (num: any, size: any) => {
+    num = num.toString();
+    while (num.length < size) num = "0" + num;
+    return num;
+  };
   const columns: ColumnsType<ItemData> = [
+    {
+      title: "Item No.",
+      dataIndex: "itemNo",
+      key: "createdAt",
+      width: 150,
+      render: (text) => {
+        return <>{pad(text, 5)}</>;
+      },
+    },
     {
       title: "Date Added",
       dataIndex: "createdAt",
       key: "createdAt",
       width: 150,
       render: (text) => {
-        return (
-          <a className="">{dayjs(text, "MM-DD-YYYY").format("MMM DD, YYYY")}</a>
-        );
+        return <>{dayjs(text, "MM-DD-YYYY").format("MMM DD, YYYY")}</>;
       },
     },
     {

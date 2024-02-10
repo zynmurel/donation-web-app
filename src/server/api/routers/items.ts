@@ -297,17 +297,17 @@ export const itemsRouter = createTRPCRouter({
           quantity: {
             gt: 0,
           },
-          ItemToMine: {
-            every: {
-              student: {
-                id: {
-                  not: {
-                    equals: input.id,
-                  },
-                },
-              },
-            },
-          },
+          // ItemToMine: {
+          //   every: {
+          //     student: {
+          //       id: {
+          //         not: {
+          //           equals: input.id,
+          //         },
+          //       },
+          //     },
+          //   },
+          // },
         },
         include: {
           student: true,

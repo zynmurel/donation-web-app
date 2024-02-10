@@ -2,6 +2,11 @@ import { Image, Popconfirm } from "antd";
 import dayjs from "dayjs";
 import { api } from "~/utils/api";
 
+export const pad = (num: any, size: any) => {
+  num = num.toString();
+  while (num.length < size) num = "0" + num;
+  return num;
+};
 const ClaimedItems = ({ student }: any) => {
   const {
     data: item,
@@ -34,14 +39,9 @@ const ClaimedItems = ({ student }: any) => {
             return (
               <div className=" flex flex-row items-center justify-between rounded border border-solid border-gray-100 p-2">
                 <div className=" flex flex-1 flex-row items-center">
-                  <Image
-                    alt="image"
-                    src={data.item?.imageUrl}
-                    height={80}
-                    width={120}
-                  />
                   <div className=" flex flex-1 flex-col px-3">
                     <div className=" text-xl font-semibold">
+                      {`#${pad(data.item?.itemNo, 5)} - `}
                       {data.item?.itemName}
                     </div>
                     <div className=" text-sm">

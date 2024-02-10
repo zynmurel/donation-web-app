@@ -24,7 +24,7 @@ const AddDonationForm = () => {
     onSuccess: () => {
       openNotificationWithIcon(
         "success",
-        "Item to Donate Added. Please Deliver Your item to our Admin Office to avoid cancelation",
+        "Item to Donate Added. Please Deliver Your item to our Alumni Office to avoid cancelation",
       );
       form.resetFields();
       router.push("/donor/donations");

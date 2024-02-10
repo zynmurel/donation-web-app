@@ -12,6 +12,7 @@ const StudentDashboard = () => {
   }
   const [quantity, setQuantity] = useState(1);
   const [viewItem, setViewItem] = useState<any>(null);
+  const [error, setError] = useState<any>(undefined);
   const { data: student } = api.student.findStudent.useQuery({
     id: user || "some",
   });
@@ -30,12 +31,18 @@ const StudentDashboard = () => {
     },
   });
   const handleOk = () => {
+    console.log(viewItem, quantity);
+    if (viewItem?.quantity < quantity) {
+      setError("error");
+    } else {
+      setError(undefined);
+      mutate({
+        itemID: viewItem?.id || "",
+        studentId: student?.id || "",
+        quantity: quantity,
+      });
+    }
     console.log(viewItem);
-    mutate({
-      itemID: viewItem?.id || "",
-      studentId: student?.id || "",
-      quantity: quantity,
-    });
   };
 
   const handleCancel = () => {
@@ -90,11 +97,10 @@ const StudentDashboard = () => {
                   <InputNumber
                     defaultValue={quantity}
                     value={quantity}
+                    status={error}
                     onChange={(e) => {
                       console.log(e && e <= viewItem?.quantity);
-                      if (e && e <= viewItem?.quantity) {
-                        setQuantity(e);
-                      }
+                      setQuantity(e);
                     }}
                   />
                 </div>

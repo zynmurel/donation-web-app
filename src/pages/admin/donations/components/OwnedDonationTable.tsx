@@ -45,9 +45,14 @@ const OwnedDonations = () => {
       key: "description",
     },
     {
-      title: "Quantity",
+      title: "Donated to Students",
       dataIndex: "quantity",
       key: "quantity",
+      render: (_: any, data: any) => {
+        return (
+          <div>{`${data.donatedCount} of ${data.quantity} ${data.unit}`}</div>
+        );
+      },
     },
     {
       title: "Image",

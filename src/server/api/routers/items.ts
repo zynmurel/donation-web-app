@@ -111,9 +111,27 @@ export const itemsRouter = createTRPCRouter({
         include: {
           donor: true,
           student: true,
+          ItemToMine: {
+            where: {
+              OR: [{ status: "claimed" }],
+            },
+            select: {
+              quantity: true,
+            },
+          },
         },
       });
-      return students;
+      return (await students).map((data) => {
+        const donatedCount = data.ItemToMine.reduce(
+          (accumulator, currentValue) =>
+            accumulator + (currentValue.quantity ? currentValue.quantity : 0),
+          0,
+        );
+        return {
+          ...data,
+          donatedCount,
+        };
+      });
     }),
   getBulkDonationByStatus: publicProcedure
     .input(
@@ -458,6 +476,12 @@ export const itemsRouter = createTRPCRouter({
         include: {
           donor: true,
           student: true,
+          ItemToMine: {
+            include: {
+              student: true,
+              item: true,
+            },
+          },
         },
       });
       return donatedPerMonth;

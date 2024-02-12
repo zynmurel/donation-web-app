@@ -18,7 +18,7 @@ const CardItemLists = () => {
     },
     {
       key: "owned",
-      tab: <div className=" text-green-500">Donated Item/s</div>,
+      tab: <div className=" text-green-500">Received Item/s</div>,
     },
     {
       key: "cancelled",

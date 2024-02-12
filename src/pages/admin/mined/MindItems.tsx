@@ -192,8 +192,8 @@ const MinedItems = () => {
           </div>
         </div>
       </Modal>
-      <div className="  flex-1  overflow-hidden rounded-lg border border-solid border-[#6abcbf] bg-[#6abcbf]">
-        <div className=" p-5 py-2 text-lg text-white">
+      <div className="  flex-1  overflow-hidden rounded-lg border border-solid border-[#cae3e4] bg-[#b6e2e4]">
+        <div className=" px-3 pt-2 text-lg font-medium uppercase text-gray-600">
           List of Item Mined By Students :{" "}
         </div>
         {!isLoading ? (

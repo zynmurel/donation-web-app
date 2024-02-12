@@ -2,6 +2,7 @@ import { Popconfirm, Table } from "antd";
 import dayjs from "dayjs";
 import { useContext } from "react";
 import { NotificationContext } from "~/pages/context/contextproviders";
+import { pad } from "~/pages/student/mined/components/ClaimedItems";
 import { api } from "~/utils/api";
 
 const ClaimedItems = () => {
@@ -19,12 +20,22 @@ const ClaimedItems = () => {
   // });
   const columns = [
     {
-      title: "ID",
+      title: "Item No.",
+      dataIndex: "item",
+      key: "createdAt",
+      width: 150,
+      render: (text: any) => {
+        return <>{pad(text.itemNo, 5)}</>;
+      },
+    },
+
+    {
+      title: "Student ID",
       key: "id",
       render: (data: any) => <div>{data?.student?.studentId}</div>,
     },
     {
-      title: "Name",
+      title: "Claimant",
       key: "name",
       render: (data: any) => (
         <div>

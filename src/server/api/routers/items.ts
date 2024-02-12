@@ -154,7 +154,7 @@ export const itemsRouter = createTRPCRouter({
   getMinedItems: publicProcedure.query(async ({ ctx }) => {
     const minedItems = await ctx.prisma.item.findMany({
       where: {
-        status: "approved",
+        OR: [{ status: "approved" }, { status: "donated" }],
         type: "small",
         quantity: { gt: 0 },
       },
@@ -204,9 +204,9 @@ export const itemsRouter = createTRPCRouter({
           },
           data: data,
         })
-        .then((data) => {
+        .then(async (data) => {
           if ((data?.quantity || 0) <= 0) {
-            return ctx.prisma.itemToMine.updateMany({
+            await ctx.prisma.itemToMine.updateMany({
               where: {
                 itemID: data.id,
                 status: null,
@@ -216,9 +216,10 @@ export const itemsRouter = createTRPCRouter({
               },
             });
           }
+          return data;
         })
-        .then(() => {
-          return ctx.prisma.itemToMine.update({
+        .then(async (data) => {
+          await ctx.prisma.itemToMine.update({
             where: {
               id: input.itemToMineId,
             },
@@ -226,6 +227,7 @@ export const itemsRouter = createTRPCRouter({
               status: "confirmed",
             },
           });
+          return data;
         });
     }),
   claimMined: publicProcedure
@@ -292,7 +294,7 @@ export const itemsRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const approvedItems = await ctx.prisma.item.findMany({
         where: {
-          status: "approved",
+          OR: [{ status: "approved" }, { status: "donated" }],
           type: "small",
           quantity: {
             gt: 0,
@@ -421,43 +423,43 @@ export const itemsRouter = createTRPCRouter({
       });
       return bulkPerMonth;
     }),
-    getDonatedItemsByMonth: publicProcedure
-      .input(
-        z.object({
-          date: z.date(),
-        }),
-      )
-      .query(({ ctx, input }) => {
-        const donatedPerMonth = ctx.prisma.item.findMany({
-          where: {
-            OR: [{ status: "donated" }, { status: "confirmed" }],
-            updatedAt: {
-              gte: dayjs(input.date).startOf("month").toDate(),
-              lte: dayjs(input.date).endOf("month").toDate(),
-            },
-          },
-          include: {
-            donor: true,
-          },
-        });
-        return donatedPerMonth;
+  getDonatedItemsByMonth: publicProcedure
+    .input(
+      z.object({
+        date: z.date(),
       }),
-      getSingleItem: publicProcedure
-        .input(
-          z.object({
-            id:z.string()
-          }),
-        )
-        .query(({ ctx, input }) => {
-          const donatedPerMonth = ctx.prisma.item.findUnique({
-            where: {
-              id:input.id
-            },
-            include: {
-              donor: true,
-              student:true
-            },
-          });
-          return donatedPerMonth;
-        }),
+    )
+    .query(({ ctx, input }) => {
+      const donatedPerMonth = ctx.prisma.item.findMany({
+        where: {
+          OR: [{ status: "donated" }, { status: "confirmed" }],
+          updatedAt: {
+            gte: dayjs(input.date).startOf("month").toDate(),
+            lte: dayjs(input.date).endOf("month").toDate(),
+          },
+        },
+        include: {
+          donor: true,
+        },
+      });
+      return donatedPerMonth;
+    }),
+  getSingleItem: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .query(({ ctx, input }) => {
+      const donatedPerMonth = ctx.prisma.item.findUnique({
+        where: {
+          id: input.id,
+        },
+        include: {
+          donor: true,
+          student: true,
+        },
+      });
+      return donatedPerMonth;
+    }),
 });

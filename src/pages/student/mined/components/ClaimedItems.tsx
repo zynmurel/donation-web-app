@@ -3,8 +3,8 @@ import dayjs from "dayjs";
 import { api } from "~/utils/api";
 
 export const pad = (num: any, size: any) => {
-  num = num.toString();
-  while (num.length < size) num = "0" + num;
+  num = num?.toString();
+  while (num?.length < size) num = "0" + num;
   return num;
 };
 const ClaimedItems = ({ student }: any) => {
@@ -44,9 +44,7 @@ const ClaimedItems = ({ student }: any) => {
                       {`#${pad(data.item?.itemNo, 5)} - `}
                       {data.item?.itemName}
                     </div>
-                    <div className=" text-sm">
-                      Quantity : {data.item?.quantity}
-                    </div>
+                    <div className=" text-sm">Quantity : {data?.quantity}</div>
                     <div className=" text-sm">
                       Description : {data.item?.description}
                     </div>

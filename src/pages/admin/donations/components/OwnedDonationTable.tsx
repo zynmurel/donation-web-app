@@ -1,6 +1,7 @@
 import { Image, Space, Table, Tag } from "antd";
 import { useContext } from "react";
 import { NotificationContext } from "~/pages/context/contextproviders";
+import { pad } from "~/pages/student/mined/components/ClaimedItems";
 import { api } from "~/utils/api";
 
 const OwnedDonations = () => {
@@ -8,6 +9,15 @@ const OwnedDonations = () => {
     status: "donated",
   });
   const columns = [
+    {
+      title: "Item No.",
+      dataIndex: "itemNo",
+      key: "createdAt",
+      width: 150,
+      render: (text: any) => {
+        return <>{pad(text, 5)}</>;
+      },
+    },
     {
       title: "Donor",
       dataIndex: "donor",

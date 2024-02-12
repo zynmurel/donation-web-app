@@ -2,8 +2,9 @@ import { api } from "~/utils/api";
 import Layout from "./layout";
 import { FaDropbox } from "react-icons/fa";
 import { useState } from "react";
-import { Image, InputNumber, Modal } from "antd";
+import { Divider, Image, InputNumber, Modal } from "antd";
 import toast, { Toaster } from "react-hot-toast";
+import { pad } from "./mined/components/ClaimedItems";
 
 const StudentDashboard = () => {
   let user;
@@ -25,14 +26,14 @@ const StudentDashboard = () => {
   });
   const { mutate } = api.item.mineItem.useMutation({
     onSuccess: () => {
+      setQuantity(1);
       setViewItem(null);
       refetch();
       toast.success("Item mined");
     },
   });
   const handleOk = () => {
-    console.log(viewItem, quantity);
-    if (viewItem?.quantity < quantity) {
+    if (viewItem?.quantity < quantity || quantity < 1) {
       setError("error");
     } else {
       setError(undefined);
@@ -48,6 +49,7 @@ const StudentDashboard = () => {
   const handleCancel = () => {
     setViewItem(null);
     setQuantity(1);
+    setError(undefined);
   };
   return (
     <Layout student={student}>
@@ -68,11 +70,14 @@ const StudentDashboard = () => {
           <div className=" text-xs text-gray-400">Click image to view</div>
           <div className=" flex w-full flex-col">
             <div className=" m-1 mx-2 sm:m-2 sm:mx-5">
+              <div className=" -mb-2 text-xs font-medium  uppercase sm:text-lg">
+                #{pad(viewItem?.itemNo, 5)}
+              </div>
               <div className=" text-3xl font-semibold uppercase sm:text-xl">
                 {viewItem?.itemName}
               </div>
               <div className=" text-sm font-normal sm:text-sm">
-                Quantity : {viewItem?.quantity}
+                Quantity : {viewItem?.quantity} {viewItem?.unit}
               </div>
               <div className=" max-h-10 overflow-hidden text-sm font-normal sm:max-h-none">
                 Description : {viewItem?.description?.slice(0, 100)}
@@ -93,16 +98,25 @@ const StudentDashboard = () => {
             <>
               <div>
                 <div className=" flex flex-col items-center justify-center">
-                  <span>Quantity</span>
+                  <span>Quantity ({viewItem?.unit})</span>
                   <InputNumber
                     defaultValue={quantity}
                     value={quantity}
                     status={error}
-                    onChange={(e) => {
+                    onChange={(e: any) => {
+                      setError(undefined);
                       console.log(e && e <= viewItem?.quantity);
-                      setQuantity(e);
+                      if (e > 0) {
+                        setQuantity(e);
+                      }
                     }}
                   />
+                  {error === "error" && (
+                    <div className=" text-xs text-red-500">
+                      Invalid Quantity. We only have {viewItem?.quantity}{" "}
+                      {viewItem?.unit} of this item
+                    </div>
+                  )}
                 </div>
               </div>
               <div className=" mt-2 flex w-full justify-end gap-2">
@@ -142,6 +156,11 @@ const StudentDashboard = () => {
               style={{ maxHeight: "75vh", overflow: "scroll" }}
             >
               {[...itemsToMine].map((data) => {
+                console.log(
+                  data?.ItemToMine?.map((data) => data.studentId).includes(
+                    student?.id || "",
+                  ),
+                );
                 return (
                   <div
                     key={data.id}
@@ -156,11 +175,14 @@ const StudentDashboard = () => {
                     </div>
                     <div className=" flex w-full flex-col justify-center overflow-hidden">
                       <div className=" m-1 mx-2 sm:m-2 sm:mx-5">
+                        <div className=" -mb-2 text-xs font-medium  uppercase sm:text-lg">
+                          #{pad(data.itemNo, 5)}
+                        </div>
                         <div className=" text-sm font-semibold uppercase sm:text-xl">
                           {data.itemName}
                         </div>
                         <div className=" text-xs font-normal sm:text-sm">
-                          Quantity : {data.quantity}
+                          Quantity : {data.quantity} {data.unit}
                         </div>
                         <div className=" max-h-10 overflow-hidden text-xs font-normal sm:max-h-none">
                           Description : {data.description?.slice(0, 100)}
@@ -170,12 +192,20 @@ const StudentDashboard = () => {
                         </div>
                       </div>
                     </div>
-                    <div
-                      onClick={() => setViewItem(data)}
-                      className=" absolute bottom-2 mx-auto w-2/3 cursor-pointer rounded-full bg-teal-400 py-1 text-center text-sm text-white hover:bg-teal-400 sm:bottom-5 sm:py-3 sm:text-base"
-                    >
-                      {student?.status === "approved" ? "Mine" : "View"} Item
-                    </div>
+                    {data?.ItemToMine?.map((data) => data.studentId).includes(
+                      student?.id || "",
+                    ) ? (
+                      <div className="  absolute bottom-2 mx-auto w-2/3 cursor-pointer rounded border border-solid border-teal-500 py-1 text-center text-xs text-teal-500 sm:bottom-5 sm:py-3 sm:text-xs">
+                        You already mined this item
+                      </div>
+                    ) : (
+                      <div
+                        onClick={() => setViewItem(data)}
+                        className=" absolute bottom-2 mx-auto w-2/3 cursor-pointer rounded-full bg-teal-400 py-1 text-center text-sm text-white hover:bg-teal-400 sm:bottom-5 sm:py-3 sm:text-base"
+                      >
+                        {student?.status === "approved" ? "Mine" : "View"} Item
+                      </div>
+                    )}
                   </div>
                 );
               })}

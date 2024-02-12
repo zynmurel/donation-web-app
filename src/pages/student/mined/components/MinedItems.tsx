@@ -2,6 +2,7 @@ import { Image, Popconfirm } from "antd";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { api } from "~/utils/api";
+import { pad } from "./ClaimedItems";
 
 const MinedItemsList = ({ student }: any) => {
   const [activeTab, setActiveTab] = useState<any>(null);
@@ -80,12 +81,11 @@ const MinedItemsList = ({ student }: any) => {
                     width={120}
                   />
                   <div className=" flex flex-1 flex-col px-3">
-                    <div className=" text-xl font-semibold">
+                    <div className=" text-base font-semibold">
+                      {`#${pad(data.item?.itemNo, 5)} - `}
                       {data.item?.itemName}
                     </div>
-                    <div className=" text-sm">
-                      Quantity : {data.item?.quantity}
-                    </div>
+                    <div className=" text-sm">Quantity : {data?.quantity}</div>
                     <div className=" text-sm">
                       Description : {data.item?.description}
                     </div>
@@ -138,9 +138,7 @@ const MinedItemsList = ({ student }: any) => {
                       {`#${pad(data.item?.itemNo, 5)} - `}
                       {data.item?.itemName}
                     </div>
-                    <div className=" text-xs">
-                      Quantity : {data.item?.quantity}
-                    </div>
+                    <div className=" text-sm">Quantity : {data?.quantity}</div>
                     <div className=" text-xs">
                       Description : {data.item?.description}
                     </div>

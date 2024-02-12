@@ -2,7 +2,7 @@ import { Dropdown, MenuProps } from "antd";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { AiOutlinePoweroff } from "react-icons/ai";
-import { FaUserCircle } from "react-icons/fa";
+import { FaUserCircle, FaUserCog } from "react-icons/fa";
 import { HiMenu } from "react-icons/hi";
 import { api } from "~/utils/api";
 
@@ -13,6 +13,21 @@ const Layout = ({ children, student }: any) => {
 
   const path = router.pathname;
   const items: MenuProps["items"] = [
+    {
+      key: "2",
+      label: (
+        <div
+          className=" flex w-full items-center justify-center gap-2 rounded-md border border-solid  py-1 text-sm hover:brightness-95 sm:text-lg"
+          onClick={() => {
+            router.push("/student/account");
+          }}
+        >
+          <FaUserCog />
+          Account
+        </div>
+      ),
+    },
+
     {
       key: "1",
       label: (
@@ -100,7 +115,7 @@ const Layout = ({ children, student }: any) => {
           >
             MINED ITEMS
           </div>
-          <div
+          {/* <div
             onClick={() => router.push("/student/account")}
             className={` w-64 cursor-pointer rounded-full  py-2 text-center  ${
               path === "/student/account"
@@ -109,7 +124,7 @@ const Layout = ({ children, student }: any) => {
             }`}
           >
             ACCOUNT
-          </div>
+          </div> */}
         </div>
       </div>
       <div className=" flex w-full flex-col">

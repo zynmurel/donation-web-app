@@ -2,6 +2,7 @@ import { Image, Popconfirm, Space, Table, Tag } from "antd";
 import dayjs from "dayjs";
 import { useContext } from "react";
 import { NotificationContext } from "~/pages/context/contextproviders";
+import { pad } from "~/pages/student/mined/components/ClaimedItems";
 import { api } from "~/utils/api";
 
 const CancelledDonations = () => {
@@ -16,6 +17,15 @@ const CancelledDonations = () => {
     },
   });
   const columns = [
+    {
+      title: "Item No.",
+      dataIndex: "itemNo",
+      key: "createdAt",
+      width: 150,
+      render: (text: any) => {
+        return <>{pad(text, 5)}</>;
+      },
+    },
     {
       title: "Donor",
       dataIndex: "donor",

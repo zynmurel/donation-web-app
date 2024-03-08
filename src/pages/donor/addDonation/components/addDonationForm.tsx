@@ -61,15 +61,15 @@ const AddDonationForm = () => {
   const unit =
     itemStatus === "small"
       ? [
-          { id: "pcs", name: "pcs" },
-          { id: "set", name: "set" },
-          { id: "pair", name: "pair" },
-        ]
+        { id: "pcs", name: "pcs" },
+        { id: "set", name: "set" },
+        { id: "pair", name: "pair" },
+      ]
       : [
-          { id: "pack", name: "pack" },
-          { id: "box", name: "box" },
-          { id: "sack", name: "sack" },
-        ];
+        { id: "pack", name: "pack" },
+        { id: "box", name: "box" },
+        { id: "sack", name: "sack" },
+      ];
   return (
     <Form
       form={form}
@@ -149,7 +149,7 @@ const AddDonationForm = () => {
           </>
         )}
         <div className=" -mt-4 font-bold sm:mb-1 sm:mt-0 sm:text-lg">
-          Description of Item to be donated
+          Provide Detail about Donated Item
         </div>
         <Form.Item
           name={"description"}

@@ -1,12 +1,13 @@
 import { Popconfirm, Table } from "antd";
 import dayjs from "dayjs";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NotificationContext } from "~/pages/context/contextproviders";
 import { pad } from "~/pages/student/mined/components/ClaimedItems";
 import { api } from "~/utils/api";
 
 const ClaimedItems = () => {
   const { openNotificationWithIcon } = useContext(NotificationContext);
+  const [claimed, setClaimed] = useState<any>(null)
   const { data, isLoading, refetch } = api.item.getClaimedItems.useQuery();
   // const { mutate: changeStatus } = api.item.claimMined.useMutation({
   //   onSuccess: () => {
@@ -18,6 +19,11 @@ const ClaimedItems = () => {
   //     );
   //   },
   // });
+  useEffect(() => {
+    if (data) {
+      setClaimed(data)
+    }
+  }, [data])
   const columns = [
     {
       title: "Item No.",
@@ -89,7 +95,7 @@ const ClaimedItems = () => {
     //   ),
     // },
   ];
-  return <Table columns={columns} dataSource={data} />;
+  return <Table columns={columns} dataSource={claimed} />;
 };
 
 export default ClaimedItems;

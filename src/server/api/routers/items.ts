@@ -412,6 +412,9 @@ export const itemsRouter = createTRPCRouter({
         include: {
           donor: true,
         },
+        orderBy:{
+          updatedAt:"desc"
+        }
       });
       return bulkPerMonth;
     }),
@@ -438,6 +441,9 @@ export const itemsRouter = createTRPCRouter({
             },
           },
         },
+        orderBy:{
+          updatedAt:"desc"
+        }
       });
       return bulkPerMonth;
     }),
@@ -459,6 +465,9 @@ export const itemsRouter = createTRPCRouter({
         include: {
           donor: true,
         },
+        orderBy:{
+          updatedAt:"desc"
+        }
       });
       return donatedPerMonth;
     }),

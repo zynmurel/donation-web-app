@@ -85,9 +85,8 @@ const StudentDashboard = () => {
               </div>
               {viewItem?.ItemToMine.length ? (
                 <div className=" max-h-10 overflow-hidden text-sm font-normal text-teal-600 sm:max-h-none">
-                  {`* ${viewItem?.ItemToMine?.length} student${
-                    viewItem?.ItemToMine.length === 1 ? "" : "s"
-                  } also mined this item`}
+                  {`* ${viewItem?.ItemToMine?.length} student${viewItem?.ItemToMine.length === 1 ? "" : "s"
+                    } also mined this item`}
                 </div>
               ) : (
                 ""
@@ -142,7 +141,7 @@ const StudentDashboard = () => {
         itemsToMine &&
         (itemsToMine.length ? (
           <div className=" flex flex-1 flex-col">
-            <div className=" p-5 pb-1 text-gray-800">Donated Item/s</div>
+            <div className=" p-5 pb-1 text-gray-800">Donated Item/s <span className=" text-cyan-700 text-sm">( You can only mine an item once )</span></div>
             {student?.status === "notapproved" && (
               <div className=" px-5 pb-1 text-xs text-gray-800 sm:text-sm">
                 <div className=" rounded border border-solid border-orange-400 bg-orange-100 p-1 text-center text-orange-400">
